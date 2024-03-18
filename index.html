@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Pytest-学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/17/Pytest-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2024-03-17T14:52:02.000Z" itemprop="datePublished">2024-03-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/17/Pytest-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Pytest 学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Pytest-依赖包"><a href="#Pytest-依赖包" class="headerlink" title="Pytest 依赖包"></a>Pytest 依赖包</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pytest</span><br><span class="line">pytest-html</span><br><span class="line">pytest-xdist</span><br><span class="line">pytest-ordering</span><br><span class="line">pytest-rerunfailures</span><br><span class="line">allure-pytest</span><br><span class="line">PyYAML</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="默认测试用例的命名规则"><a href="#默认测试用例的命名规则" class="headerlink" title="默认测试用例的命名规则"></a>默认测试用例的命名规则</h3><ol>
+<li>模块名必须以test_开头或者__test结尾.</li>
+<li>测试类名必须以Test开头, 并且不能用init方法.</li>
+<li>测试方法必须以test开头.</li>
+</ol>
+<h3 id="Pytest执行方式"><a href="#Pytest执行方式" class="headerlink" title="Pytest执行方式"></a>Pytest执行方式</h3><ol>
+<li><p>main函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    pytest.main([<span class="string">&#x27;-vs&#x27;</span>])</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>命令行</p>
+<ul>
+<li>-n&#x3D;线程数, 并行执行</li>
+<li>-v 详细输出</li>
+<li>–reruns&#x3D;number, 失败后rerun次数</li>
+<li>-x 只要有一个fail, 停止执行</li>
+<li>–maxfail&#x3D;2, 有2个测试失败, 停止执行</li>
+<li>-k “one” 执行测试用例的包含”one”的</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">(.venv) (base) mytest % pytest -vs</span><br><span class="line">=============================================================== <span class="built_in">test</span> session starts ================================================================</span><br><span class="line">platform darwin -- Python 3.11.7, pytest-8.1.1, pluggy-1.4.0 -- ~/mytest/.venv/bin/python</span><br><span class="line">cachedir: .pytest_cache</span><br><span class="line">metadata: &#123;<span class="string">&#x27;Python&#x27;</span>: <span class="string">&#x27;3.11.7&#x27;</span>, <span class="string">&#x27;Platform&#x27;</span>: <span class="string">&#x27;macOS-14.4-arm64-arm-64bit&#x27;</span>, <span class="string">&#x27;Packages&#x27;</span>: &#123;<span class="string">&#x27;pytest&#x27;</span>: <span class="string">&#x27;8.1.1&#x27;</span>, <span class="string">&#x27;pluggy&#x27;</span>: <span class="string">&#x27;1.4.0&#x27;</span>&#125;, <span class="string">&#x27;Plugins&#x27;</span>: &#123;<span class="string">&#x27;html&#x27;</span>: <span class="string">&#x27;4.1.1&#x27;</span>, <span class="string">&#x27;metadata&#x27;</span>: <span class="string">&#x27;3.1.1&#x27;</span>, <span class="string">&#x27;rerunfailures&#x27;</span>: <span class="string">&#x27;14.0&#x27;</span>, <span class="string">&#x27;ordering&#x27;</span>: <span class="string">&#x27;0.6&#x27;</span>, <span class="string">&#x27;allure-pytest&#x27;</span>: <span class="string">&#x27;2.13.3&#x27;</span>, <span class="string">&#x27;xdist&#x27;</span>: <span class="string">&#x27;3.5.0&#x27;</span>&#125;&#125;</span><br><span class="line">rootdir: ~/workspace/mytest</span><br><span class="line">plugins: html-4.1.1, metadata-3.1.1, rerunfailures-14.0, ordering-0.6, allure-pytest-2.13.3, xdist-3.5.0</span><br><span class="line">collected 1 item                                                                                                                                   </span><br><span class="line"></span><br><span class="line">src/testcase/test_one.py::TestOne::test_01_hello_world Test: Hello world!</span><br><span class="line">PASSED</span><br><span class="line">================================================================ 1 passed <span class="keyword">in</span> 0.00s =================================================================</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>通过读取pytest.ini配置文件运行</p>
+</li>
+<li><p>指定特殊的文件运行</p>
+</li>
+</ol>
+   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    pytest.main([<span class="string">&#x27;-vs&#x27;</span>, <span class="string">&#x27;src/testcase/test_one.py&#x27;</span>,<span class="string">&#x27;src/testcase/test_two.py&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>指定特殊的目录执行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    pytest.main([<span class="string">&#x27;-vs&#x27;</span>, <span class="string">&#x27;src/testcase/module1&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>通过Node ID运行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    pytest.main([<span class="string">&#x27;-vs&#x27;</span>, <span class="string">&#x27;src/testcase/module1/test_module1.py::TestModule1::testMyModule1testCase&#x27;</span>])</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Pytest执行顺序"><a href="#Pytest执行顺序" class="headerlink" title="Pytest执行顺序"></a>Pytest执行顺序</h3><p>从上到下执行</p>
+<p><strong>通过@pytest.mark.run(order&#x3D;1)</strong> 改变执行顺序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@pytest.mark.run(<span class="params">order=<span class="number">1</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_02_hello_world</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Test 02: Hello world!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>通过pytest.ini单元测试的核心配置文件运行, <ol>
+<li>一般放在项目的根目录</li>
+<li>编码必须是ANSI</li>
+<li>改变pytest默认行为</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[pytest]</span><br><span class="line">addopts = -vs</span><br><span class="line">testpaths = ./src/</span><br><span class="line">python_files = test*.py</span><br><span class="line">python_classes = Test*</span><br><span class="line">python_functions = test</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="分组执行"><a href="#分组执行" class="headerlink" title="分组执行"></a>分组执行</h3><ol>
+<li><p>方法名前加上自定义标记@pytest.mark.group1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@pytest.mark.group1</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">testMytestCase003</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Test my test case 3&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>修改pytest.ini, 增加markers</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[pytest]</span><br><span class="line">addopts = -vs</span><br><span class="line">testpaths = ./src/</span><br><span class="line">python_files = test*.py</span><br><span class="line">python_classes = Test*</span><br><span class="line">python_functions = test</span><br><span class="line">markers = </span><br><span class="line">      group1: test module 1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>命令行增加参数-m 标记名</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    pytest.main([<span class="string">&#x27;-vs&#x27;</span>, <span class="string">&#x27;-m group1&#x27;</span>])</span><br><span class="line">    </span><br><span class="line">运行两个以上的标记用 <span class="keyword">or</span> 放在两个标记之间</span><br><span class="line">pytest -vs -m <span class="string">&quot;group1 or group2 or group3&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="跳过测试用例"><a href="#跳过测试用例" class="headerlink" title="跳过测试用例"></a>跳过测试用例</h3><ol>
+<li><p>无条件跳过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@pytest.mark.skip(reason=&quot;I don&#x27;t like it.&quot;)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>有条件跳过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flag = 18</span><br><span class="line"></span><br><span class="line">@pytest.mark.skipif(flag &gt; 18, reason=&#x27;Skip it.&#x27;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Setup-teardown"><a href="#Setup-teardown" class="headerlink" title="Setup&#x2F;teardown"></a>Setup&#x2F;teardown</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestTwo</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">setup_method</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This is setup before method&quot;</span>)</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">setup_class</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This is setup before class&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">teardown_method</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This is setup after method&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">teardown_class</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This is setup after class&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">testMytestCase001</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Test my test case 1&quot;</span>)</span><br><span class="line">        </span><br><span class="line">src/testcase/test_two.py::TestTwo::testMytestCase003 This <span class="keyword">is</span> setup before <span class="keyword">class</span></span><br><span class="line"><span class="title class_">This</span> <span class="keyword">is</span> setup before method</span><br><span class="line">Test my test <span class="keyword">case</span> <span class="number">3</span></span><br><span class="line">PASSEDThis <span class="keyword">is</span> setup after method</span><br><span class="line">This <span class="keyword">is</span> setup after <span class="keyword">class</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="生成测试报告"><a href="#生成测试报告" class="headerlink" title="生成测试报告"></a>生成测试报告</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[pytest]</span><br><span class="line">addopts = -vs --html ./report/report.html</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用-pytest-fixture-装饰器"><a href="#使用-pytest-fixture-装饰器" class="headerlink" title="使用@pytest.fixture()装饰器"></a>使用@pytest.fixture()装饰器</h3><p>@pytest.fixture(scope&#x3D;’’, params&#x3D;’’, autouse&#x3D;’’, ids&#x3D;’’, name&#x3D;’’)</p>
+<ul>
+<li>Scope 表明被pytest.fixture标记方法的作用域. function(默认), class, module, package&#x2F;session</li>
+<li>params,  参数化, 支持list[], tuple(), 自带字典列表[{}], 字典元组({})</li>
+<li>autouse&#x3D;True, 自动执行, 默认False, 无需有方法体内参数上引用函数名做为形参</li>
+<li>ids, 当使用params参数化时, 给每一个值设置一个变量名</li>
+<li>name, 表示是被@pytest.fixture标记的方法取一个别名, 当取了别名, 原有的名字就不能使用了.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">import pytest</span><br><span class="line"></span><br><span class="line">@pytest.fixture(scope=&#x27;function&#x27;)</span><br><span class="line">def beforeAfterMethod():</span><br><span class="line">    print(&#x27;this is a before step&#x27;)</span><br><span class="line">    yield</span><br><span class="line">    print(&#x27;this is a after step&#x27;)</span><br><span class="line"></span><br><span class="line">class TestTwo:</span><br><span class="line">    flag = 18</span><br><span class="line"></span><br><span class="line">    def setup_method(self):</span><br><span class="line">        print(&quot;This is setup before method&quot;)</span><br><span class="line">   </span><br><span class="line">    def setup_class(self):</span><br><span class="line">        print(&quot;This is setup before class&quot;)</span><br><span class="line"></span><br><span class="line">    def teardown_method(self):</span><br><span class="line">        print(&quot;This is setup after method&quot;)</span><br><span class="line"></span><br><span class="line">    def teardown_class(self):</span><br><span class="line">        print(&quot;This is setup after class&quot;)</span><br><span class="line"></span><br><span class="line">    def testMytestCase001(self):</span><br><span class="line">        print(&quot;Test my test case 1&quot;)</span><br><span class="line"></span><br><span class="line">    def testMytestCase002(self):</span><br><span class="line">        print(&quot;Test my test case 2&quot;)</span><br><span class="line">    </span><br><span class="line">    @pytest.mark.group1</span><br><span class="line">    @pytest.mark.skipif(flag &gt; 18, reason=&#x27;Skip it.&#x27;)</span><br><span class="line">    def testMytestCase003(self,beforeAfterMethod ):</span><br><span class="line">        print(&quot;Test my test case 3&quot;)</span><br><span class="line"></span><br><span class="line">src/testcase/test_two.py::TestTwo::testMytestCase003 </span><br><span class="line">This is setup before class</span><br><span class="line">This is setup before method</span><br><span class="line">this is a before step</span><br><span class="line">Test my test case 3</span><br><span class="line">PASSEDthis is a after step</span><br><span class="line">This is setup after method</span><br><span class="line">This is setup after class</span><br></pre></td></tr></table></figure>
+
+
+
+<p>参数化通过<strong>yield request.param</strong>返回具体参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">@pytest.fixture(scope=&#x27;function&#x27;, params=[&#x27;aa&#x27;, &#x27;bb&#x27;, &#x27;cc&#x27;])</span><br><span class="line">def beforeAfterMethod(request):</span><br><span class="line">    print(&#x27;this is a before step&#x27;)</span><br><span class="line">    yield request.param</span><br><span class="line">    print(&#x27;this is a after step&#x27;)</span><br><span class="line">    </span><br><span class="line"> def testMytestCase003(self, beforeAfterMethod):</span><br><span class="line">    print(f&quot;Test my test case 3 &#123;beforeAfterMethod&#125;&quot;)</span><br><span class="line">    </span><br><span class="line">src/testcase/test_two.py::TestTwo::testMytestCase003[aa] This is setup before class</span><br><span class="line">This is setup before method</span><br><span class="line">this is a before step</span><br><span class="line">Test my test case 3 aa</span><br><span class="line">PASSEDthis is a after step</span><br><span class="line">This is setup after method</span><br><span class="line"></span><br><span class="line">src/testcase/test_two.py::TestTwo::testMytestCase003[bb] This is setup before method</span><br><span class="line">this is a before step</span><br><span class="line">Test my test case 3 bb</span><br><span class="line">PASSEDthis is a after step</span><br><span class="line">This is setup after method</span><br><span class="line"></span><br><span class="line">src/testcase/test_two.py::TestTwo::testMytestCase003[cc] This is setup before method</span><br><span class="line">this is a before step</span><br><span class="line">Test my test case 3 cc</span><br><span class="line">PASSEDthis is a after step</span><br><span class="line">This is setup after method</span><br><span class="line">This is setup after class</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>结合conftest.py使用</strong></p>
+<ul>
+<li><p>conftest.py是单独的存放的一个夹具配置文件, 名称不可改</p>
+</li>
+<li><p>可以跨文件使用</p>
+</li>
+<li><p>conftest.py需要和运行的用例放到同一层, 并且不需要导入.</p>
+</li>
+<li><p>使用多个conftest.py, 如下图, 按列出的先后顺序执行.</p>
+<p>![image-20240318162807712](&#x2F;Users&#x2F;orion&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240318162807712.png)</p>
+</li>
+</ul>
+<p>总结:</p>
+<ol>
+<li>Setup&#x2F;teardown 它是作用于所有用例</li>
+<li>@pytest.fixture(), 它的作用既可以部分也可以全部前后置</li>
+<li>conftest.py和@pytest.fixture()结合使用, 作用于前后置.</li>
+</ol>
+<h3 id="pytest-结合allure-pytest插件生成allure测试报告"><a href="#pytest-结合allure-pytest插件生成allure测试报告" class="headerlink" title="pytest 结合allure-pytest插件生成allure测试报告"></a>pytest 结合allure-pytest插件生成allure测试报告</h3><ol>
+<li><p>下载, 解压, 配置path路径</p>
+<p>地址: <a target="_blank" rel="noopener" href="https://github.com/allure-framework/allure2">allure2</a></p>
+</li>
+</ol>
+<p>​        验证 allure –version</p>
+<ol start="2">
+<li><p>加命令生成json格式的临时报告.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--alluredir ./tmep</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>生成allure报告</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">allure genrate ./temp -o ./report --clean</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="使用-pytest-mark-parametrize"><a href="#使用-pytest-mark-parametrize" class="headerlink" title="使用@pytest.mark.parametrize()"></a>使用@pytest.mark.parametrize()</h3><p>@pytest.mark.parametrize(args_name, args_value)</p>
+<p>args_name: 参数名</p>
+<p>args_value: 参数值, 支持list[], tuple(), 自带字典列表[{}], 字典元组({})</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@pytest.mark.parametrize(<span class="params"><span class="string">&#x27;name1&#x27;</span>, [<span class="string">&#x27;aa&#x27;</span>, <span class="string">&#x27;bb&#x27;</span>, <span class="string">&#x27;cc&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">testMyModule1testCase</span>(<span class="params">self, name1</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Test my module case 1 <span class="subst">&#123;name1&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="meta">@pytest.mark.parametrize(<span class="params"><span class="string">&#x27;k,v&#x27;</span>, [[<span class="string">&#x27;aa&#x27;</span>,<span class="number">1</span>], [<span class="string">&#x27;bb&#x27;</span>,<span class="number">2</span>], [<span class="string">&#x27;cc&#x27;</span>,<span class="number">3</span>]]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">testMyModule1testCase</span>(<span class="params">self, k, v</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Test my module case 1 <span class="subst">&#123;k&#125;</span>:<span class="subst">&#123;v&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>YAML</strong></p>
+<p>支持注释, 换行, 多行字符串, 裸字符串(整形, 字符串)</p>
+<ol>
+<li>区分大小写</li>
+<li>用缩进表示层级, 不能使用tab, 只能用空格</li>
+<li>缩进没有数量, 只要对齐就行</li>
+</ol>
+<p>数据组成</p>
+<ol>
+<li><p>Map对象, </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">My</span> <span class="string">name</span></span><br><span class="line">  <span class="attr">age:</span> <span class="number">18</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">data2:</span> &#123;<span class="attr">name:</span> <span class="string">name2</span>, <span class="attr">age:</span> <span class="number">18</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>数组对象,</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">data:</span></span><br><span class="line">   <span class="bullet">-</span> <span class="number">1</span></span><br><span class="line">   <span class="bullet">-</span> <span class="number">2</span></span><br><span class="line">   <span class="bullet">-</span> <span class="number">3</span></span><br><span class="line">  </span><br><span class="line"><span class="bullet">-</span> <span class="number">4</span></span><br><span class="line"><span class="bullet">-</span> <span class="number">5</span></span><br><span class="line"><span class="bullet">-</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过YAML数据驱动测试用例</p>
+<p>YamlUtil.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> yaml</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">YamlUtil</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, yaml_file</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.yaml_file = yaml_file</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">readFile</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(self.yaml_file, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            val = yaml.full_load(f)</span><br><span class="line">            <span class="keyword">return</span> val</span><br><span class="line">          </span><br></pre></td></tr></table></figure>
+
+<p>Test_api.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests, os</span><br><span class="line"><span class="keyword">import</span> pytest</span><br><span class="line"><span class="keyword">from</span> util.YamlUtil <span class="keyword">import</span> YamlUtil</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TestApi</span>:</span><br><span class="line"></span><br><span class="line"><span class="meta">    @pytest.mark.parametrize(<span class="params"><span class="string">&#x27;args&#x27;</span>, YamlUtil(<span class="params">os.path.join(<span class="params">os.getcwd(<span class="params"></span>),<span class="string">&#x27;src/util/test.yaml&#x27;</span></span>)</span>).readFile(<span class="params"></span>)</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">testApi1</span>(<span class="params">self, args</span>):</span><br><span class="line">         url = args[<span class="string">&#x27;url&#x27;</span>]</span><br><span class="line">         res = requests.get(url)</span><br><span class="line">         <span class="keyword">assert</span> res.status_code == args[<span class="string">&#x27;eq&#x27;</span>][<span class="string">&#x27;statuscode&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>test.yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> </span><br><span class="line">    <span class="attr">url:</span> <span class="string">https://www.bing.com/search?q=</span></span><br><span class="line">    <span class="attr">keyword:</span> <span class="string">哈哈哈</span></span><br><span class="line">    <span class="attr">eq:</span></span><br><span class="line">      <span class="attr">statuscode:</span> <span class="number">200</span></span><br><span class="line"><span class="bullet">-</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">https://www.baidu.com/s?wd=</span></span><br><span class="line">    <span class="attr">keyword:</span> <span class="string">你好</span></span><br><span class="line">    <span class="attr">eq:</span></span><br><span class="line">      <span class="attr">statuscode:</span> <span class="number">200</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/17/Pytest-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="cltx5dazf0000rco6hoqn5440" data-title="Pytest 学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/14/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2024-03-14T12:42:19.000Z" itemprop="datePublished">2024-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/14/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/14/hello-world/" data-id="cltr92p280000g7o6e2vl828x" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Java-学习笔记-Lambda" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/11/Java-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Lambda/" class="article-date">
+  <time class="dt-published" datetime="2024-03-11T13:42:15.000Z" itemprop="datePublished">2024-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/03/11/Java-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Lambda/">Java 学习笔记--Lambda</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ol>
+<li><p>一个参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msg -&gt; System.out.println(msg)</span><br><span class="line">一个参数无需()</span><br></pre></td></tr></table></figure></li>
+<li><p>多个参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(a, b) -&gt; a + b</span><br><span class="line">参数无需类型声明, 函数体内单条语句,无需return, 也不需要花括号</span><br></pre></td></tr></table></figure></li>
+<li><p>无参</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -\&gt; System.out.println(&quot;Hello world&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多条语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(a, b) -\&gt; &#123;</span><br><span class="line">  a = a * b;</span><br><span class="line">  b = b * a;</span><br><span class="line">&#125;</span><br><span class="line">多条语句返回需要return, 且需要用花括号</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>空函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -\&gt; &#123;&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>要求Lambda表达式实现的接口只能有一个抽象的方法, 这样的接口称为函数式接口.<br>为了避免接口中出现多个抽象方法, 可以接口上使用@FunctionalInterface注解, 声明该接口是一个函数式接口,如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">MathOperation</span>&#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">operation</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><ul>
+<li>对象 :: 实例方法名</li>
+<li>类名 :: 静态方法名</li>
+<li>类名 :: 实例方法名</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.function.BiPredicate;</span><br><span class="line"><span class="keyword">import</span> java.util.function.BinaryOperator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MathUtil</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">add</span> <span class="params">(<span class="type">int</span> a , <span class="type">int</span> b)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">subtract</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> a - b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MethodRef</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">operate</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, BinaryOperator&lt;Integer&gt; operator)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> operator.apply(a, b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">MathUtil</span> <span class="variable">math</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MathUtil</span>();</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">addRes1</span> <span class="operator">=</span> operate(<span class="number">5</span>, <span class="number">3</span>, math::add);</span><br><span class="line">        <span class="type">int</span> <span class="variable">addRes2</span> <span class="operator">=</span> operate( <span class="number">5</span>, <span class="number">3</span>, (a, b) -&gt; math.add(a, b));</span><br><span class="line">        System.out.println(String.format(<span class="string">&quot;%d + %d = res1(%d), res2(%d)&quot;</span>, <span class="number">5</span>, <span class="number">3</span>, addRes1, addRes2));</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">subRes1</span> <span class="operator">=</span> operate(<span class="number">5</span>, <span class="number">3</span>, MathUtil::subtract);</span><br><span class="line">        <span class="type">int</span> <span class="variable">subRes2</span> <span class="operator">=</span> operate(<span class="number">5</span>, <span class="number">3</span>, (a, b) -&gt; MathUtil.subtract(a, b));</span><br><span class="line">        System.out.println(String.format(<span class="string">&quot;%d - %d = res1(%d), res2(%d)&quot;</span>, <span class="number">5</span>, <span class="number">3</span>, subRes1, subRes2));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//类名 :: 实例方法名, 这里是将函数式接口方法的第一个参数作为调用实例方法的对象, 接口方法的其它参数作为实例方法的参数.</span></span><br><span class="line">        BiPredicate&lt;String, String&gt; bp1 = String::equals;</span><br><span class="line">        BiPredicate&lt;String, String&gt; bp2 = (a, b) -&gt; a.equals(b);</span><br><span class="line">        System.out.println(bp1.test(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>));</span><br><span class="line">        System.out.println(bp2.test(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output:</span><br><span class="line"><span class="number">5</span> + <span class="number">3</span> = res1(<span class="number">8</span>), res2(<span class="number">8</span>)</span><br><span class="line"><span class="number">5</span> - <span class="number">3</span> = res1(<span class="number">2</span>), res2(<span class="number">2</span>)</span><br><span class="line"><span class="literal">false</span></span><br><span class="line"><span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="构造方法引用"><a href="#构造方法引用" class="headerlink" title="构造方法引用"></a>构造方法引用</h3><p><strong>类名::new</strong><br>对应的函数式接口中的方法需要有返回值, 构造方法的参数列表要与接口中方法的参数列表一致.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.function.BiFunction;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Function;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Supplier;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> no;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>(<span class="number">0</span>, <span class="string">&quot;None&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(<span class="type">int</span> no)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>(no, <span class="string">&quot;None&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(<span class="type">int</span> no , String name)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.no = no;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> no + <span class="string">&quot; : &quot;</span> + name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConstructorRef</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        Supplier&lt;Student&gt; s1 = Student::<span class="keyword">new</span>;</span><br><span class="line">        Supplier&lt;Student&gt; s2 = () -&gt; <span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line">        System.out.println(s1.get());</span><br><span class="line">        System.out.println(s2.get());</span><br><span class="line"></span><br><span class="line">        Function&lt;Integer, Student&gt; fun1 = Student::<span class="keyword">new</span>;</span><br><span class="line">        Function&lt;Integer, Student&gt; fun2 = no -&gt; <span class="keyword">new</span> <span class="title class_">Student</span>(no);</span><br><span class="line">        System.out.println(fun1.apply(<span class="number">1</span>));</span><br><span class="line">        System.out.println(fun2.apply(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">        BiFunction&lt;Integer, String, Student&gt; biFun1 = Student::<span class="keyword">new</span>;</span><br><span class="line">        BiFunction&lt;Integer, String, Student&gt; biFun2 = (no, name) -&gt; <span class="keyword">new</span> <span class="title class_">Student</span>(no, name);</span><br><span class="line">        System.out.println(biFun1.apply(<span class="number">1</span>, <span class="string">&quot;name1&quot;</span>));</span><br><span class="line">        System.out.println(biFun2.apply(<span class="number">2</span>, <span class="string">&quot;name2&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="数组引用"><a href="#数组引用" class="headerlink" title="数组引用"></a>数组引用</h3><p><strong>type[]::new</strong> 例如Integer[]::new, 与构造方法类似.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">        Function&lt;Integer, Integer[]&gt; fun1 = Integer[]::<span class="keyword">new</span>;</span><br><span class="line">        Function&lt;Integer, Integer[]&gt; fun2 = (n) -&gt;<span class="keyword">new</span> <span class="title class_">Integer</span>[n];</span><br><span class="line">        Integer[] intArr = fun1.apply(<span class="number">10</span>);</span><br><span class="line">        Integer[] intArr2 = fun2.apply(<span class="number">10</span>);</span><br><span class="line">        System.out.println(String.format(<span class="string">&quot;Array 1 size is %d&quot;</span>, intArr.length));</span><br><span class="line">        System.out.println(String.format(<span class="string">&quot;Array 2 size is %d&quot;</span>, intArr2.length));</span><br><span class="line"></span><br><span class="line">output:</span><br><span class="line">Array <span class="number">1</span> size is <span class="number">10</span></span><br><span class="line">Array <span class="number">2</span> size is <span class="number">10</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/11/Java-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Lambda/" data-id="cltr83b4b0000g1o65yaig2wz" data-title="Java 学习笔记--Lambda" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Windows上增加Ssh-key遇到的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/21/Windows%E4%B8%8A%E5%A2%9E%E5%8A%A0Ssh-key%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-02-21T13:29:15.000Z" itemprop="datePublished">2024-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/21/Windows%E4%B8%8A%E5%A2%9E%E5%8A%A0Ssh-key%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">Github：Windows上增加Ssh key遇到的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="第一步，-先安装Git"><a href="#第一步，-先安装Git" class="headerlink" title="第一步， 先安装Git"></a>第一步， 先安装Git</h3><h3 id="打开git-bash-运行下面命令生成key"><a href="#打开git-bash-运行下面命令生成key" class="headerlink" title="打开git bash,运行下面命令生成key,"></a>打开git bash,运行下面命令生成key,</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; ssh-keygen -t ed25519 -C <span class="string">&quot;your_email@example.com&quot;</span></span><br><span class="line"></span><br><span class="line">&gt; Enter file <span class="keyword">in</span> <span class="built_in">which</span> to save the key (/c/Users/YOU/.ssh/id_ALGORITHM):[Press enter]</span><br><span class="line"></span><br><span class="line">&gt; Enter passphrase (empty <span class="keyword">for</span> no passphrase): [Type a passphrase]</span><br><span class="line">&gt; Enter same passphrase again: [Type passphrase again]</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行-ssh-add-l-检查ssh服务是否启动，-如没有，-通过下面的命令，-以管理员权限打开Power-shell-启动ssh-agent"><a href="#运行-ssh-add-l-检查ssh服务是否启动，-如没有，-通过下面的命令，-以管理员权限打开Power-shell-启动ssh-agent" class="headerlink" title="运行 ssh-add -l, 检查ssh服务是否启动， 如没有， 通过下面的命令， 以管理员权限打开Power shell, 启动ssh agent"></a>运行 ssh-add -l, 检查ssh服务是否启动， 如没有， 通过下面的命令， 以管理员权限打开Power shell, 启动ssh agent</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-add -l</span><br><span class="line"></span><br><span class="line">Get-Service -Name ssh-agent | Set-Service -StartupType Manual</span><br><span class="line">Start-Service ssh-agent</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="错误-这时候如果先ssh-add-private-key-会有如下报借"><a href="#错误-这时候如果先ssh-add-private-key-会有如下报借" class="headerlink" title="错误, 这时候如果先ssh-add private key, 会有如下报借"></a>错误, 这时候如果先ssh-add private key, 会有如下报借</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(base) PS C:\WINDOWS\system32&gt; ssh-add C:\Users\UserName\.ssh\id_ed25519</span><br><span class="line">Bad permissions. Try removing permissions <span class="keyword">for</span> user: \\Everyone (S-1-1-0) on file C:/Users/UserName/.ssh/id_ed25519.</span><br><span class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="line">@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @</span><br><span class="line">@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</span><br><span class="line">Permissions <span class="keyword">for</span> <span class="string">&#x27;C:\\Users\\UserName\\.ssh\\id_ed25519&#x27;</span> are too open.</span><br><span class="line">It is required that your private key files are NOT accessible by others.</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改-Winodws下private-key的权限"><a href="#修改-Winodws下private-key的权限" class="headerlink" title="修改 Winodws下private key的权限"></a><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a1314a9448fa">修改</a> Winodws下private key的权限</h3><ul>
+<li>右键打开私钥文件或其所在文件夹的属性，点击安全选项卡中的高级选项，在弹出窗口中点击左下角的禁用继承，接着选择从此对象中删除所有已继承的权限。这样就首先删除了所有权限</li>
+<li>下一步还需要添加用户的权限。点击刚才禁用继承选项上方的添加，弹出菜单中点击左上角的选择主体，在选择用户或组窗口的下方有输入要选择的对象名称窗口，这里输入Windows用户名（如：Administrator等）然后检查名称，如果用户名没有问题的话就会自动匹配用户名，然后确定，在权限项目窗口中选择完全控制，然后确定</li>
+</ul>
+<h3 id="通过ssh-add把private-key加入ssh-agent"><a href="#通过ssh-add把private-key加入ssh-agent" class="headerlink" title="通过ssh-add把private key加入ssh agent"></a>通过ssh-add把private key加入ssh agent</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-add -l</span><br><span class="line">ssh-add C:\Users\yUserName\.ssh\id_ed25519</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="上传Ssh-public-key到Github"><a href="#上传Ssh-public-key到Github" class="headerlink" title="上传Ssh public key到Github"></a>上传Ssh public key到Github</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Win11用下面这个命令复制到粘贴板</span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub | clip</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/21/Windows%E4%B8%8A%E5%A2%9E%E5%8A%A0Ssh-key%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cltr83b4e0002g1o6b9ndbf0g" data-title="Github：Windows上增加Ssh key遇到的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Linux-shell-学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/02/21/Linux-shell-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2024-02-21T12:18:24.000Z" itemprop="datePublished">2024-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/02/21/Linux-shell-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Linux-shell-学习笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Markdown"><a href="#Markdown" class="headerlink" title="Markdown"></a>Markdown</h2><table>
+<thead>
+<tr>
+<th>language</th>
+<th>key</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>C</td>
+<td>c</td>
+</tr>
+<tr>
+<td>ActionScript</td>
+<td>actionscript</td>
+</tr>
+<tr>
+<td>Apache</td>
+<td>apache</td>
+</tr>
+<tr>
+<td>AppleScript</td>
+<td>applescript</td>
+</tr>
+<tr>
+<td>AsciiDoc</td>
+<td>asciidoc</td>
+</tr>
+<tr>
+<td>AspectJ</td>
+<td>asciidoc</td>
+</tr>
+<tr>
+<td>AutoHotkey</td>
+<td>autohotkey</td>
+</tr>
+<tr>
+<td>AVR Assembler</td>
+<td>avrasm</td>
+</tr>
+<tr>
+<td>Axapta</td>
+<td>axapta</td>
+</tr>
+<tr>
+<td>Bash</td>
+<td>bash</td>
+</tr>
+<tr>
+<td>BrainFuck</td>
+<td>brainfuck</td>
+</tr>
+<tr>
+<td>Cap’n Proto</td>
+<td>capnproto</td>
+</tr>
+<tr>
+<td>Clojure REPL</td>
+<td>clojure</td>
+</tr>
+<tr>
+<td>Clojure</td>
+<td>clojure</td>
+</tr>
+<tr>
+<td>CMake</td>
+<td>cmake</td>
+</tr>
+<tr>
+<td>CoffeeScript</td>
+<td>coffeescript</td>
+</tr>
+<tr>
+<td>C++</td>
+<td>cpp</td>
+</tr>
+<tr>
+<td>C#</td>
+<td>cs</td>
+</tr>
+<tr>
+<td>CSS</td>
+<td>css</td>
+</tr>
+<tr>
+<td>D</td>
+<td>d</td>
+</tr>
+<tr>
+<td>Dart</td>
+<td>d</td>
+</tr>
+<tr>
+<td>Delphi</td>
+<td>delphi</td>
+</tr>
+<tr>
+<td>Diff</td>
+<td>diff</td>
+</tr>
+<tr>
+<td>Django</td>
+<td>django</td>
+</tr>
+<tr>
+<td>DOS.bat</td>
+<td>dos</td>
+</tr>
+<tr>
+<td>Dust</td>
+<td>dust</td>
+</tr>
+<tr>
+<td>Elixir</td>
+<td>elixir</td>
+</tr>
+<tr>
+<td>ERB(Embedded Ruby)</td>
+<td>erb</td>
+</tr>
+<tr>
+<td>Erlang REPL</td>
+<td>erlang-repl</td>
+</tr>
+<tr>
+<td>Erlang</td>
+<td>erlang</td>
+</tr>
+<tr>
+<td>FIX</td>
+<td>fix</td>
+</tr>
+<tr>
+<td>F#</td>
+<td>fsharp</td>
+</tr>
+<tr>
+<td>G-code(ISO 6983)</td>
+<td>gcode</td>
+</tr>
+<tr>
+<td>Gherkin</td>
+<td>gherkin</td>
+</tr>
+<tr>
+<td>GLSL</td>
+<td>glsl</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>go</td>
+</tr>
+<tr>
+<td>Gradle</td>
+<td>gradle</td>
+</tr>
+<tr>
+<td>Groovy</td>
+<td>groovy</td>
+</tr>
+<tr>
+<td>Haml</td>
+<td>haml</td>
+</tr>
+<tr>
+<td>Handlebars</td>
+<td>handlebars</td>
+</tr>
+<tr>
+<td>Haskell</td>
+<td>haskell</td>
+</tr>
+<tr>
+<td>Haxe</td>
+<td>haxe</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>html</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>http</td>
+</tr>
+<tr>
+<td>Ini file</td>
+<td>ini</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>java</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>javascript</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td>json</td>
+</tr>
+<tr>
+<td>Lasso</td>
+<td>lasso</td>
+</tr>
+<tr>
+<td>Less</td>
+<td>less</td>
+</tr>
+<tr>
+<td>Lisp</td>
+<td>lisp</td>
+</tr>
+<tr>
+<td>LiveCode</td>
+<td>livecodeserver</td>
+</tr>
+<tr>
+<td>LiveScript</td>
+<td>livescript</td>
+</tr>
+<tr>
+<td>Lua</td>
+<td>lua</td>
+</tr>
+<tr>
+<td>Makefile</td>
+<td>makefile</td>
+</tr>
+<tr>
+<td>Markdown</td>
+<td>markdown</td>
+</tr>
+<tr>
+<td>Mathematica</td>
+<td>mathematica</td>
+</tr>
+<tr>
+<td>Matlab</td>
+<td>matlab</td>
+</tr>
+<tr>
+<td>MEL (Maya Embedded Language)</td>
+<td>mel</td>
+</tr>
+<tr>
+<td>Mercury</td>
+<td>mercury</td>
+</tr>
+<tr>
+<td>Mizar</td>
+<td>mizar</td>
+</tr>
+<tr>
+<td>Monkey</td>
+<td>monkey</td>
+</tr>
+<tr>
+<td>Nginx</td>
+<td>nginx</td>
+</tr>
+<tr>
+<td>Nimrod</td>
+<td>nimrod</td>
+</tr>
+<tr>
+<td>Nix</td>
+<td>nix</td>
+</tr>
+<tr>
+<td>NSIS</td>
+<td>nsis</td>
+</tr>
+<tr>
+<td>Objective C</td>
+<td>objectivec</td>
+</tr>
+<tr>
+<td>OCaml</td>
+<td>ocaml</td>
+</tr>
+<tr>
+<td>Oxygene</td>
+<td>oxygene</td>
+</tr>
+<tr>
+<td>Parser 3</td>
+<td>parser3</td>
+</tr>
+<tr>
+<td>Perl</td>
+<td>perl</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td>php</td>
+</tr>
+<tr>
+<td>PowerShell</td>
+<td>powershell</td>
+</tr>
+<tr>
+<td>Processing</td>
+<td>processing</td>
+</tr>
+<tr>
+<td>Python’s profiler output</td>
+<td>profile</td>
+</tr>
+<tr>
+<td>Protocol Buffers</td>
+<td>protobuf</td>
+</tr>
+<tr>
+<td>Puppet</td>
+<td>puppet</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>python</td>
+</tr>
+<tr>
+<td>Q</td>
+<td>q</td>
+</tr>
+<tr>
+<td>R</td>
+<td>r</td>
+</tr>
+<tr>
+<td>RenderMan RIB</td>
+<td>rib</td>
+</tr>
+<tr>
+<td>Roboconf</td>
+<td>roboconf</td>
+</tr>
+<tr>
+<td>RenderMan RSL</td>
+<td>rsl</td>
+</tr>
+<tr>
+<td>Ruby</td>
+<td>ruby</td>
+</tr>
+<tr>
+<td>Oracle Rules Language</td>
+<td>ruleslanguage</td>
+</tr>
+<tr>
+<td>Rust</td>
+<td>rust</td>
+</tr>
+<tr>
+<td>Scala</td>
+<td>scala</td>
+</tr>
+<tr>
+<td>Scheme</td>
+<td>scheme</td>
+</tr>
+<tr>
+<td>Scilab</td>
+<td>scilab</td>
+</tr>
+<tr>
+<td>SCSS</td>
+<td>scss</td>
+</tr>
+<tr>
+<td>Smali</td>
+<td>smali</td>
+</tr>
+<tr>
+<td>SmallTalk</td>
+<td>smalltalk</td>
+</tr>
+<tr>
+<td>SML</td>
+<td>sml</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td>sql</td>
+</tr>
+<tr>
+<td>Stata</td>
+<td>stata</td>
+</tr>
+<tr>
+<td>STEP Part21(ISO 10303-21)</td>
+<td>step21</td>
+</tr>
+<tr>
+<td>Stylus</td>
+<td>stylus</td>
+</tr>
+<tr>
+<td>Swift</td>
+<td>swift</td>
+</tr>
+<tr>
+<td>Tcl</td>
+<td>tcl</td>
+</tr>
+<tr>
+<td>Tex</td>
+<td>tex</td>
+</tr>
+<tr>
+<td>text</td>
+<td>text&#x2F;plain</td>
+</tr>
+<tr>
+<td>Thrift</td>
+<td>thrift</td>
+</tr>
+<tr>
+<td>Twig</td>
+<td>twig</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>typescript</td>
+</tr>
+<tr>
+<td>Vala</td>
+<td>vala</td>
+</tr>
+<tr>
+<td>VB.NET</td>
+<td>vbnet</td>
+</tr>
+<tr>
+<td>VBScript in HTML</td>
+<td>vbscript-html</td>
+</tr>
+<tr>
+<td>VBScript</td>
+<td>vbscript</td>
+</tr>
+<tr>
+<td>Verilog</td>
+<td>verilog</td>
+</tr>
+<tr>
+<td>VHDL</td>
+<td>vhdl</td>
+</tr>
+<tr>
+<td>Vim Script</td>
+<td>vim</td>
+</tr>
+<tr>
+<td>Intel x86 Assembly</td>
+<td>x86asm</td>
+</tr>
+<tr>
+<td>XL</td>
+<td>xl</td>
+</tr>
+<tr>
+<td>XML</td>
+<td>xml</td>
+</tr>
+<tr>
+<td>YAML</td>
+<td>yml</td>
+</tr>
+</tbody></table>
+<h1 id="Bash-login-priority"><a href="#Bash-login-priority" class="headerlink" title="Bash login priority"></a>Bash login priority</h1><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">       -------------/etc/profile----------</span><br><span class="line">       |               |                 |</span><br><span class="line">~/.bash_profile    ~/.bash_login   ~/.profile</span><br><span class="line">       \               |              /</span><br><span class="line">        \              |             / </span><br><span class="line">                   ~/.bashrc</span><br><span class="line">                       |</span><br><span class="line">                       |</span><br><span class="line">                   /etc/bashrc</span><br><span class="line">                       |</span><br><span class="line">                       |</span><br><span class="line">                   ~/.bash_logout </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol>
+<li>&#x2F;etc&#x2F;profile</li>
+<li>&#x2F;etc&#x2F;bashrc</li>
+<li>~&#x2F;.bashrc</li>
+<li>~&#x2F;.bash_profile</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">s =&gt;start: Login</span><br><span class="line">e =&gt;end: Logout</span><br><span class="line">etcPro=&gt;operation: /etc/profile</span><br><span class="line">bashPro=&gt;operation: ~/.bash_profile</span><br><span class="line">bashLogin=&gt;operation: ~/.bash_login</span><br><span class="line">myPro=&gt;operation: ~/.profile</span><br><span class="line">bashRc=&gt;operation: ~/.bashrc</span><br><span class="line">etcRc=&gt;operation: /etc/bashrc</span><br><span class="line">bashOut=&gt;operation: ~/.bash_logout </span><br><span class="line">s--&gt;etcPro--&gt;e</span><br></pre></td></tr></table></figure>
+
+<h2 id="Shell-注释"><a href="#Shell-注释" class="headerlink" title="Shell 注释"></a>Shell 注释</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">: &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">statement1</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="命令执行顺序"><a href="#命令执行顺序" class="headerlink" title="命令执行顺序"></a>命令执行顺序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt &amp;&amp;  echo &quot;File exists.&quot; || echo &quot;File not exists.&quot;</span></span><br><span class="line">-rw-r--r--. 1 root root 0 Jan  1 04:34 d.txt</span><br><span class="line">File exists.</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt ||  echo &quot;File exists.&quot; || echo &quot;File not exists.&quot;</span></span><br><span class="line">-rw-r--r--. 1 root root 0 Jan  1 04:34 d.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l e.txt &amp;&amp;  echo &quot;File exists.&quot; || echo &quot;File not exists.&quot;</span></span><br><span class="line"><span class="built_in">ls</span>: cannot access e.txt: No such file or directory</span><br><span class="line">File not exists.</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l e.txt &amp;&amp;  echo &quot;File exists.&quot; &amp;&amp; echo &quot;File not exists.&quot;</span></span><br><span class="line"><span class="built_in">ls</span>: cannot access e.txt: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p><strong>执行多条命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># who ; whoami ; uptime</span></span><br><span class="line">root     pts/1        2024-01-01 04:28 (u33)</span><br><span class="line">root</span><br><span class="line"> 04:56:37 up  2:42,  1 user,  load average: 0.00, 0.01, 0.05</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># expr 6+6</span></span><br><span class="line">6+6</span><br><span class="line">[root@localhost ~]<span class="comment"># expr 6 + 6</span></span><br><span class="line">12</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># let a=6+6</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $a</span></span><br><span class="line">12</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $[6+6]</span></span><br><span class="line">12</span><br></pre></td></tr></table></figure>
+
+<h3 id="整数运算-let-expr-bc"><a href="#整数运算-let-expr-bc" class="headerlink" title="整数运算 $[] (()) let  expr bc"></a>整数运算 $[] (()) let  expr bc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># echo $[1+6]</span></span><br><span class="line">7</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># res1=$[1+6]</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $res1</span></span><br><span class="line">7</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ((res1=1, res2=res1+6))</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$res1, $res2&quot;</span></span><br><span class="line">1, 7</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># let res1=1+7</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $res1</span></span><br><span class="line">8</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;10^2&quot; |bc</span></span><br><span class="line">100</span><br></pre></td></tr></table></figure>
+
+<h2 id="清空文件"><a href="#清空文件" class="headerlink" title="清空文件"></a>清空文件</h2><h3 id="长度为0"><a href="#长度为0" class="headerlink" title="长度为0"></a>长度为0</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># : &gt;d.txt</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt</span></span><br><span class="line">-rw-r--r--. 1 root root 0 Dec 31 11:32 d.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># cat /dev/null &gt;d.txt</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt</span></span><br><span class="line">-rw-r--r--. 1 root root 0 Dec 31 11:34 d.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># cp /dev/null d.txt</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># truncate -s 0 d.txt</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="长度为1"><a href="#长度为1" class="headerlink" title="长度为1"></a>长度为1</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># echo &quot;&quot; &gt; d.txt</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt</span></span><br><span class="line">-rw-r--r--. 1 root root 1 Dec 31 11:35 d.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># expr length “aab”</span></span><br><span class="line">9</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;aab&quot; |wc -L</span></span><br><span class="line">3</span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;aab&quot; |wc -c </span></span><br><span class="line">4 (换行)</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># expr &quot;$&#123;str&#125;&quot;</span></span><br><span class="line">abcde</span><br><span class="line">[root@localhost ~]<span class="comment"># expr &quot;$&#123;str&#125;&quot; : &quot;.*&quot;</span></span><br><span class="line">5</span><br></pre></td></tr></table></figure>
+
+<h3 id="截取字符串"><a href="#截取字符串" class="headerlink" title="截取字符串"></a>截取字符串</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># str=&quot;You like Linux so much&quot;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str:1&#125;</span></span><br><span class="line">ou like Linux so much</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str:2&#125;</span></span><br><span class="line">u like Linux so much</span><br></pre></td></tr></table></figure>
+<p>** 截取后面8位或者4位 **</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str:4:8&#125;</span></span><br><span class="line">like Lin</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str:4:4&#125;</span></span><br><span class="line">like</span><br></pre></td></tr></table></figure>
+<h3 id="替换字符串"><a href="#替换字符串" class="headerlink" title="替换字符串"></a>替换字符串</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str/like/love&#125;</span></span><br><span class="line">You love Linux so much</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># expr $a+$b</span></span><br><span class="line">10+20</span><br><span class="line">[root@localhost ~]<span class="comment"># expr $a + $b</span></span><br><span class="line">30</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符数字相加"><a href="#字符数字相加" class="headerlink" title="字符数字相加"></a>字符数字相加</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># let c=a+b</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $c</span></span><br><span class="line">30</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo c=$[ $a + $b]</span></span><br><span class="line">c=30</span><br></pre></td></tr></table></figure>
+<h1 id="判断条件"><a href="#判断条件" class="headerlink" title="判断条件"></a>判断条件</h1><h2 id="字符串测试"><a href="#字符串测试" class="headerlink" title="字符串测试"></a>字符串测试</h2><ol>
+<li>比较操作符两端有空格.</li>
+<li>字符串或者变量都要加双引号, 防止字符串内有空格</li>
+<li>使用 &gt;&lt;要转义,不然Shell不知道是不是输出重定向.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|表达式|操作符|说明|</span><br><span class="line">|---|---|---|</span><br><span class="line">|[ <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span>&quot;</span> = <span class="string">&quot;<span class="variable">$&#123;str2&#125;</span>&quot;</span> ] | [] [[]]| 字符串相同时返回真|</span><br><span class="line">| [ <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span>&quot;</span> != <span class="string">&quot;&#123;str2&#125;&quot;</span> ] | [] [[]]| 字符串不相同时返回真|</span><br><span class="line">| [ -n <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span>&quot;</span> ] | [] [[]] | 长度大于0时, 返回真, 非空|</span><br><span class="line">| [ -z <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span>&quot;</span> ] |[] [[]] | 长度等于0时, 返回真, 空串|</span><br><span class="line">|[ <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span> ]| [] [[]] | 非空为真 |</span></span><br><span class="line"><span class="string">|&gt;, &lt;| [] 比较结果一样返回相同值 | [[]] 根据相应ASCII比较 |</span></span><br><span class="line"><span class="string">|\\&gt;, \\&lt;| [] 根据相应ASCII比较| [[]] 不可以使用</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="整数测试"><a href="#整数测试" class="headerlink" title="整数测试"></a>整数测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1. <span class="built_in">test</span> <span class="string">&quot;<span class="variable">$num1</span>&quot;</span> op num2</span><br><span class="line">2. [ <span class="string">&quot;<span class="variable">$&#123;num1&#125;</span>&quot;</span> op <span class="string">&quot;<span class="variable">$&#123;num2&#125;</span>&quot;</span> ]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">|整数比较运行符 |说明 |</span><br><span class="line">|---|---|</span><br><span class="line">| num1 -eq num2 | 相等为0 |</span><br><span class="line">| num1 -ne num2| 不相等为0 |</span><br><span class="line">| num1 -gt num2| 大于为0 |</span><br><span class="line">| num1 -lt num2| 小于为0 |</span><br><span class="line">| num1 -ge num2| 大于等于为0 |</span><br><span class="line">| num1 -le num2| 小于等于为0 |</span><br><span class="line">| &gt; | 大于, 需要使用双圆括号且要转义, 如((&quot;<span class="variable">$num1</span>&quot; &lt; &quot;<span class="variable">$num2</span>&quot;)) &lt;br&gt;[root@localhost ~]<span class="comment">#  ((1 \&lt; 2)); echo $?&lt;br&gt;0|</span></span><br><span class="line">| &lt; | 小于, 需要使用双圆括号且要转义, 如((&quot;<span class="variable">$num1</span>&quot;&lt;&quot;<span class="variable">$num2</span>&quot;))|</span><br><span class="line">| &gt;= | 大于等于, 需要使用双圆括号且要转义, 如((&quot;<span class="variable">$num1</span>&quot;&gt;=&quot;<span class="variable">$num2</span>&quot;))|</span><br><span class="line">| &lt;=| 小于等于, 需要使用双圆括号且要转义, 如((&quot;<span class="variable">$num1</span>&quot;&lt;=&quot;<span class="variable">$num2</span>&quot;))|</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="文件状态测试"><a href="#文件状态测试" class="headerlink" title="文件状态测试"></a>文件状态测试</h2><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a file</td>
+<td>如果文件存在为真</td>
+</tr>
+<tr>
+<td>-b file</td>
+<td>如果文件是块设备为真</td>
+</tr>
+<tr>
+<td>-c file</td>
+<td>如果文件字符设备为真</td>
+</tr>
+<tr>
+<td>-d file</td>
+<td>如果是目录为真</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>如果是普能文件为真, 非目录和设备文件</td>
+</tr>
+<tr>
+<td>-g file</td>
+<td>如果文件设置了SGID位为真</td>
+</tr>
+<tr>
+<td>-L file</td>
+<td>如果是符号链接为真</td>
+</tr>
+<tr>
+<td>-u file</td>
+<td>如果文件设置了SUID为真</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>如果文件可读为真</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>如果文件可写为真</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>如果文件可执行为真</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>如果文件为空为真, 文件大小大于0</td>
+</tr>
+<tr>
+<td>-c file</td>
+<td>如果文件或目录存在为真</td>
+</tr>
+</tbody></table>
+<h2 id="复杂判断逻辑运算符"><a href="#复杂判断逻辑运算符" class="headerlink" title="复杂判断逻辑运算符"></a>复杂判断逻辑运算符</h2><table>
+<thead>
+<tr>
+<th>逻辑运算符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-a</td>
+<td>逻辑与</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>逻辑或</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑非</td>
+</tr>
+</tbody></table>
+<h2 id="子shell"><a href="#子shell" class="headerlink" title="子shell"></a>子shell</h2><p>(cmd1;cmd2): 子shell<br>{cmd1; cmd2}: 当前shell</p>
+<p>在第一个例子中，使用小括号创建了一个子shell，子shell 中修改的变量 a 不会影响到父shell，因此在最后的 echo $a 中输出的是父shell 中的值，即 6。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># a=6</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ( echo &quot;Hello&quot; ; a=7; echo $a;);echo $a</span></span><br><span class="line">Hello</span><br><span class="line">7</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
+
+
+<p>在第二个例子中，使用大括号块 {} 创建的是当前shell 的命令组合，其中对变量 a 的修改会影响到父shell。因此，在最后的 echo $a 中输出的是被修改过的值，即 7。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># a=6</span></span><br><span class="line">[root@localhost ~]<span class="comment"># &#123; echo &quot;Hello&quot; ; a=7; echo $a;&#125;;echo $a</span></span><br><span class="line">Hello</span><br><span class="line">7</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
+
+<h2 id="Test-let"><a href="#Test-let" class="headerlink" title="Test [] [[]] (()) let"></a>Test [] [[]] (()) let</h2><ul>
+<li>[] 等同test, 用于传统的测试表达式，如字符串比较、整数比较等。</li>
+<li>[] 在进行字符串比较时，通常需要使用 &#x3D; 或者 !&#x3D;，而在 [[ … ]] 中可以使用 &#x3D;&#x3D; 或者 !&#x3D;。</li>
+<li>[[ … ]] 更灵活，可以进行正则表达式匹配，如 [[ “$var” &#x3D;~ pattern ]]。</li>
+<li>[[ … ]] 中的变量不需要引号引起来，而在 [] 中最好使用引号。</li>
+<li>(())用于算术操作，可以进行整数比较和赋值等</li>
+<li>let用于执行算术操作和赋值。</li>
+</ul>
+<h3 id="反引号-："><a href="#反引号-：" class="headerlink" title="反引号 &#96;&#96;："></a>反引号 &#96;&#96;：</h3><p>result&#x3D;<code>command</code><br>或者</p>
+<p>result&#x3D;$(command)<br>这两种语法是等效的，它们都会执行 command 并将其输出赋值给变量 result。这种方式在较旧版本的shell中较为常见。</p>
+<h3 id="："><a href="#：" class="headerlink" title="$()："></a>$()：</h3><p>result&#x3D;$(command)<br>这是一种更现代、推荐使用的命令替换方式，与反引号 &#96;&#96; 功能相同。这个语法更灵活，并且可以嵌套使用，而且在可读性上更好。</p>
+<h3 id="eval："><a href="#eval：" class="headerlink" title="eval："></a>eval：</h3><p>eval result&#x3D;$(command)<br>eval 用于执行字符串中的命令。它会将参数合并成一个字符串，并将其作为 shell 命令执行。eval 可以用于动态地构建和执行命令，但也容易引入安全性问题，因为它会执行任意的 shell 代码。</p>
+<p>总的来说，推荐使用 $() 进行命令替换，因为它更灵活、可读性更好，并且在大多数情况下更安全。 eval 的使用应当谨慎，因为它可能导致意外的副作用和安全风险。</p>
+<h3 id="字符子串Index"><a href="#字符子串Index" class="headerlink" title="字符子串Index"></a>字符子串Index</h3><p>[root@localhost ~]# expr index ${str} ‘a’<br>2</p>
+<p>[root@localhost ~]# echo $str |awk -F “” ‘{print $1, $NF}’<br>h i</p>
+<p>[root@localhost ~]# echo “This is a test” |awk ‘{printf(“%d\n”, match($0, “test”))}’<br>11</p>
+<h3 id="双引号-单引号-VAR-单引号-双引号"><a href="#双引号-单引号-VAR-单引号-双引号" class="headerlink" title="双引号 + 单引号 + VAR +  单引号 + 双引号"></a>双引号 + 单引号 + VAR +  单引号 + 双引号</h3><p>[root@localhost ~]# awk ‘BEGIN{print “‘$a’”}’<br>aaa</p>
+<h3 id="双引号-单引号-双引号-VAR-双引号-单引号-双引号-如果变量中有空格，防止将空格作为分隔符"><a href="#双引号-单引号-双引号-VAR-双引号-单引号-双引号-如果变量中有空格，防止将空格作为分隔符" class="headerlink" title="双引号 + 单引号 + 双引号 + VAR +  双引号 + 单引号 + 双引号, 如果变量中有空格，防止将空格作为分隔符"></a>双引号 + 单引号 + 双引号 + VAR +  双引号 + 单引号 + 双引号, 如果变量中有空格，防止将空格作为分隔符</h3><p>[root@localhost ~]# awk ‘BEGIN{print “‘“$a”‘“}’<br>aaa</p>
+<h3 id="AWK向Shell传递变量"><a href="#AWK向Shell传递变量" class="headerlink" title="AWK向Shell传递变量"></a>AWK向Shell传递变量</h3><p>[root@localhost ~]# eval $(awk ‘BEGIN{print “var1&#x3D;’str1’”}’)<br>[root@localhost ~]# echo $var1<br>str1</p>
+<h3 id="输出OFS"><a href="#输出OFS" class="headerlink" title="输出OFS"></a>输出OFS</h3><p>[root@localhost ~]# awk -F: ‘{if ($1&#x3D;&#x3D;”root”) print $1,$3}’ OFS&#x3D;’&amp;&amp;&amp;’  &#x2F;etc&#x2F;passwd<br>root&amp;&amp;&amp;0</p>
+<p>Print all: print 或 print $0<br>[root@localhost ~]# awk -F: ‘{if ($1&#x3D;&#x3D;”root”) print}’ &#x2F;etc&#x2F;passwd<br>root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</p>
+<h3 id="自定义标题"><a href="#自定义标题" class="headerlink" title="自定义标题"></a>自定义标题</h3><p>[root@localhost ~]# awk ‘BEGIN{OFS&#x3D;”\t”; print “UserName”,”Privilegs”} {print $1, $3} END{print “All users”}’ FS&#x3D;”:” &#x2F;etc&#x2F;passwd<br>UserName        Privilegs<br>root    0<br>bin     1<br>daemon  2<br>adm     3<br>tcpdump 72<br>All users</p>
+<h3 id="自定义标题格式左对齐"><a href="#自定义标题格式左对齐" class="headerlink" title="自定义标题格式左对齐"></a>自定义标题格式左对齐</h3><p>[root@localhost ~]# awk ‘BEGIN{OFS&#x3D;”\t”; printf “%-20s%s\n”, “UserName”, “Privileges”} {printf “%-20s%s\n”, $1, $3} END{print “All users”}’ FS&#x3D;”:” &#x2F;etc&#x2F;passwd<br>UserName            Privileges<br>root                0<br>bin                 1<br>daemon              2<br>adm                 3<br>lp                  4<br>sync                5<br>shutdown            6<br>tcpdump             72<br>All users<br>[root@localhost ~]# awk ‘BEGIN{OFS&#x3D;”\t”; printf “%-20s%-20s\n”, “UserName”, “Privileges”} {printf “%-20s%-20s\n”, $1, $3} END{print “All users”}’ FS&#x3D;”:” &#x2F;etc&#x2F;passwd<br>UserName            Privileges<br>root                0<br>bin                 1<br>daemon              2<br>adm                 3<br>lp                  4</p>
+<h3 id="右对齐"><a href="#右对齐" class="headerlink" title="右对齐"></a>右对齐</h3><p>[root@localhost ~]# awk ‘BEGIN{OFS&#x3D;”\t”; printf “%+20s%+20s\n”, “UserName”, “Privileges”} {printf “%+20s%+20s\n”, $1, $3} END{print “All users”}’ FS&#x3D;”:” &#x2F;etc&#x2F;passwd<br>            UserName          Privileges<br>                root                   0<br>                 bin                   1<br>              daemon                   2<br>                 adm                   3<br>                  lp                   4<br>                sync                   5</p>
+<h3 id="多分隔符使用-F’-’"><a href="#多分隔符使用-F’-’" class="headerlink" title="多分隔符使用 -F’[]’"></a>多分隔符使用 -F’[]’</h3><p>[root@localhost ~]# cat c.txt<br>aa_bb:cc_dd:ee_ff<br>hh_ii:jj_kk:ll_mm<br>[root@localhost ~]# awk -F’[: _]’ ‘{print $1, $6}’ c.txt<br>aa ff<br>hh mm</p>
+<h3 id="使用-F’-’-解决连续分隔符"><a href="#使用-F’-’-解决连续分隔符" class="headerlink" title="使用 -F’[]’+ 解决连续分隔符"></a>使用 -F’[]’+ 解决连续分隔符</h3><p>[root@localhost ~]# cat c.txt<br>aa__bb:::cc__dd:::::ee__ff<br>hh__ii:::jj__kk:::::ll__mm<br>[root@localhost ~]# awk -F’[: _]+’ ‘{print $1, $6}’ c.txt<br>aa ff<br>hh mm</p>
+<p>[root@localhost ~]# awk ‘BEGIN{a&#x3D;”aaa”; print a++, ++a}’<br>0 2<br>这是因为在 awk 中，字符串和数字之间的操作会进行自动的类型转换。在这个例子中，a 被初始化为字符串 “aaa”，然后在 print 语句中使用了自增运算符 ++，这导致 awk 将字符串 “aaa” 转换为数字。字符串 “aaa” 被解释为数字 0，因为它以一个非数字字符开头。</p>
+<p>所以，a++ 中的 ++ 会使 a 的值变为 0，而 ++a 会使 a 的值变为 1。因此，结果是 “0 2”。</p>
+<p>如果你想要避免这种自动转换，你可以将 a 明确初始化为数字，例如：awk ‘BEGIN{a&#x3D;0; print a++, ++a}’</p>
+<h3 id="模式匹配-awk-pattern-actioins"><a href="#模式匹配-awk-pattern-actioins" class="headerlink" title="模式匹配 awk pattern { actioins }"></a>模式匹配 awk pattern { actioins }</h3><p>[root@localhost ~]# awk -F: ‘&#x2F;^(r..t|adm)&#x2F;{print $1}’ &#x2F;etc&#x2F;passwd<br>root<br>adm</p>
+<p>[root@localhost ~]# awk -F: ‘$3&gt;990  {print $1}’ &#x2F;etc&#x2F;passwd<br>polkitd<br>libstoragemgmt<br>unbound<br>gluster<br>nfsnobody<br>pcp<br>chrony</p>
+<p>[root@localhost ~]# awk -F: ‘{IGNORECASE&#x3D;1; if($1 ~&#x2F;^[a-z]&#x2F; &amp;&amp;  $NF ~&#x2F;bash$&#x2F;) {print $0}}’ &#x2F;etc&#x2F;passwd<br>root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</p>
+<p>[root@localhost ~]# awk -F: ‘{ if (!($1 ~&#x2F;^[a-z]&#x2F; &amp;&amp; $NF ~&#x2F;bash$&#x2F;)) {print} }’ &#x2F;etc&#x2F;passwd<br>bin:x:1:1:bin:&#x2F;bin:&#x2F;sbin&#x2F;nologin<br>daemon:x:2:2:daemon:&#x2F;sbin:&#x2F;sbin&#x2F;nologin<br>adm:x:3:4:adm:&#x2F;var&#x2F;adm:&#x2F;sbin&#x2F;nologin</p>
+<p>[root@localhost ~]# awk -F: ‘$3&gt;990 &amp;&amp; $4&#x3D;995  {print}’ &#x2F;etc&#x2F;passwd<br>polkitd x 999 995 User for polkitd &#x2F; &#x2F;sbin&#x2F;nologin<br>libstoragemgmt x 998 995 daemon account for libstoragemgmt &#x2F;var&#x2F;run&#x2F;lsm &#x2F;sbin&#x2F;nologin<br>unbound x 997 995 Unbound DNS resolver &#x2F;etc&#x2F;unbound &#x2F;sbin&#x2F;nologin<br>gluster x 996 995 GlusterFS daemons &#x2F;run&#x2F;gluster &#x2F;sbin&#x2F;nologin<br>nfsnobody x 65534 995 Anonymous NFS User &#x2F;var&#x2F;lib&#x2F;nfs &#x2F;sbin&#x2F;nologin<br>pcp x 995 995 Performance Co-Pilot &#x2F;var&#x2F;lib&#x2F;pcp &#x2F;sbin&#x2F;nologin<br>chrony x 994 995  &#x2F;var&#x2F;lib&#x2F;chrony &#x2F;sbin&#x2F;nologin</p>
+<h3 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h3><p>[root@localhost ~]#  awk -v name&#x3D;aaa ‘BEGIN{printf “my name is %-20s\n”, name}’<br>my name is aaa<br>[root@localhost ~]#  awk -v name&#x3D;aaa ‘BEGIN{printf “my name is %+20s\n”, name}’<br>my name is                  aaa</p>
+<p>For each<br>[root@localhost ~]# awk -F: ‘{a[NR]&#x3D;$1} END{for (item in a) print a[item]}’ &#x2F;etc&#x2F;passwd<br>mysql<br>libstoragemgmt<br>adm<br>pcp<br>rpc<br>lp<br>sshd</p>
+<p>For loop<br>[root@localhost ~]# awk -F: ‘{a[NR]&#x3D;$1} END{for (i&#x3D;1; i&lt;&#x3D;NR; i++) print a[i]}’ &#x2F;etc&#x2F;passwd<br>root<br>bin<br>daemon<br>adm<br>lp</p>
+<h3 id="内置变量与Export变量"><a href="#内置变量与Export变量" class="headerlink" title="内置变量与Export变量"></a>内置变量与Export变量</h3><p>[root@localhost ~]# export a&#x3D;aaa<br>[root@localhost ~]# awk ‘BEGIN{for (i in ENVIRON) {print i”&#x3D;”ENVIRON[i]}}’<br>AWKPATH&#x3D;.:&#x2F;usr&#x2F;share&#x2F;awk<br>SELINUX_LEVEL_REQUESTED&#x3D;<br>SELINUX_ROLE_REQUESTED&#x3D;<br>LANG&#x3D;en_US.UTF-8<br>HISTSIZE&#x3D;1000<br>XDG_RUNTIME_DIR&#x3D;&#x2F;run&#x2F;user&#x2F;0<br>USER&#x3D;root<br>_&#x3D;&#x2F;usr&#x2F;bin&#x2F;awk<br>SELINUX_USE_CURRENT_RANGE&#x3D;<br>TERM&#x3D;xterm<br>SHELL&#x3D;&#x2F;bin&#x2F;bash<br>a&#x3D;aaa</p>
+<h3 id="AWK的运行时间"><a href="#AWK的运行时间" class="headerlink" title="AWK的运行时间"></a>AWK的运行时间</h3><p>[root@localhost ~]# time(awk ‘BEGIN{total&#x3D;0; for (i&#x3D;0;i&lt;&#x3D;10000;i++) {total+&#x3D;i;} print total;}’)<br>50005000</p>
+<p>real    0m0.003s<br>user    0m0.000s<br>sys     0m0.003s</p>
+<p>[root@localhost ~]# time(total&#x3D;0;for i in $(seq 10000);do total&#x3D;$(($total + i ));done; echo $total;)<br>50005000</p>
+<p>real    0m0.071s<br>user    0m0.065s<br>sys     0m0.005s</p>
+<h3 id="变量相加"><a href="#变量相加" class="headerlink" title="变量相加"></a>变量相加</h3><p>[root@localhost ~]# awk ‘BEGIN{a&#x3D;10;b&#x3D;20;c&#x3D;(a+b);print c}’<br>30</p>
+<h3 id="字符连接"><a href="#字符连接" class="headerlink" title="字符连接"></a>字符连接</h3><p>[root@localhost ~]# awk ‘BEGIN{a&#x3D;10;b&#x3D;20;c&#x3D;(a””b);print c}’<br>1020</p>
+<h3 id="统计并排序"><a href="#统计并排序" class="headerlink" title="统计并排序"></a>统计并排序</h3><ul>
+<li><input checked="" disabled="" type="checkbox"> 方法一<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># awk &#x27;&#123;a[$1]++&#125; END&#123; for ( b in a ) print a[b], b&#125;&#x27; a.txt|sort -rn</span></span><br><span class="line">3 ccc</span><br><span class="line">2 aaa</span><br><span class="line">1 bbb</span><br><span class="line">```  </span><br><span class="line">- [x] 方法二</span><br><span class="line">```bash</span><br><span class="line">[root@localhost ~]<span class="comment"># sort a.txt |uniq -c |sort -rn</span></span><br><span class="line">      3 ccc</span><br><span class="line">      2 aaa</span><br><span class="line">      1 bbb</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line"><span class="comment">### grep 空行</span></span><br><span class="line">[root@localhost ~]<span class="comment"># grep &quot;^$&quot; *</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### rep 空行和注释行</span></span><br><span class="line">[root@localhost ~]<span class="comment"># grep -E &quot;^$|#&quot; *</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## sed</span></span><br><span class="line">[root@localhost ~]<span class="comment"># sed &#x27;s/ccc/eee/&#x27; a.txt</span></span><br><span class="line">aaa</span><br><span class="line">bbb</span><br><span class="line">eee ccc</span><br><span class="line">aaa</span><br><span class="line">eee ccc</span><br><span class="line">eee ccc</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># sed &#x27;s/ccc/eee/g&#x27; a.txt</span></span><br><span class="line">aaa</span><br><span class="line">bbb</span><br><span class="line">eee eee</span><br><span class="line">aaa</span><br><span class="line">eee eee</span><br><span class="line">eee eee</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># sed -i &#x27;s/ccc/eee/g&#x27; a.txt</span></span><br><span class="line">[root@localhost ~]<span class="comment"># cat a.txt</span></span><br><span class="line">aaa</span><br><span class="line">bbb</span><br><span class="line">eee eee</span><br><span class="line">aaa</span><br><span class="line">eee eee</span><br><span class="line">eee eee</span><br><span class="line"></span><br><span class="line"><span class="comment">### 插入到行前</span></span><br><span class="line">[root@localhost ~]<span class="comment">#  sed -e &#x27;/bbb/i\fff&#x27; a.txt</span></span><br><span class="line">aaa</span><br><span class="line">fff</span><br><span class="line">bbb</span><br><span class="line">eee eee</span><br><span class="line">aaa</span><br><span class="line">eee eee</span><br><span class="line">eee eee</span><br><span class="line"></span><br><span class="line"><span class="comment">### 插入到行后</span></span><br><span class="line">[root@localhost ~]<span class="comment">#  sed -e &#x27;/bbb/a\fff&#x27; a.txt</span></span><br><span class="line">aaa</span><br><span class="line">bbb</span><br><span class="line">fff</span><br><span class="line">eee eee</span><br><span class="line">aaa</span><br><span class="line">eee eee</span><br><span class="line">eee eee</span><br><span class="line"></span><br><span class="line"><span class="comment">### 删除第2行， 最后一行</span></span><br><span class="line">[root@localhost ~]<span class="comment"># sed &#x27;2d;$d&#x27; a.txt</span></span><br><span class="line">aaa</span><br><span class="line">fff</span><br><span class="line">eee eee</span><br><span class="line">aaa</span><br><span class="line">eee eee</span><br><span class="line"></span><br><span class="line"><span class="comment">### 删除第2到最后一行</span></span><br><span class="line">[root@localhost ~]<span class="comment"># sed &#x27;2,$d&#x27; a.txt</span></span><br><span class="line">aaa</span><br><span class="line"></span><br><span class="line"><span class="comment">### 删除奇数行</span></span><br><span class="line">[root@localhost ~]<span class="comment"># sed &#x27;1~2d&#x27; a.txt</span></span><br><span class="line">bbb</span><br><span class="line">eee eee</span><br><span class="line">eee eee</span><br><span class="line"></span><br><span class="line"><span class="comment">### 行前行后 增加</span></span><br><span class="line">[root@localhost ~]<span class="comment"># sed &#x27;3a hhh&#x27; a.txt</span></span><br><span class="line">aaa</span><br><span class="line">bbb</span><br><span class="line">fff</span><br><span class="line">hhh</span><br><span class="line">eee eee</span><br><span class="line">aaa</span><br><span class="line">eee eee</span><br><span class="line">eee eee</span><br><span class="line">[root@localhost ~]<span class="comment"># sed &#x27;3i hhh&#x27; a.txt</span></span><br><span class="line">aaa</span><br><span class="line">bbb</span><br><span class="line">hhh</span><br><span class="line">fff</span><br><span class="line">eee eee</span><br><span class="line">aaa</span><br><span class="line">eee eee</span><br><span class="line">eee eee</span><br><span class="line"></span><br><span class="line"><span class="comment">## dd </span></span><br><span class="line">&gt;<span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=./test.txt bs=1M count=10</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## find and execute command</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># find a.txt -exec ls -l &#123;&#125; \;</span></span><br><span class="line">-rw-r--r--. 1 root root 40 Jan  7 08:54 a.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># find a* -type f -exec ls -l &#123;&#125; \;</span></span><br><span class="line">-rw-------. 1 root root 1861 Nov 15 09:04 anaconda-ks.cfg</span><br><span class="line">-rw-r--r--. 1 root root 35 Dec 11 10:37 a.sh</span><br><span class="line">-rw-r--r--. 1 root root 40 Jan  7 08:54 a.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">### if statement</span></span><br><span class="line"><span class="keyword">if</span> [ condition1 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    statements</span><br><span class="line"><span class="keyword">elif</span> [ condition2 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    statements</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    statements</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### case statement</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">  value1)</span><br><span class="line">    statements</span><br><span class="line">    <span class="built_in">break</span></span><br><span class="line">;;</span><br><span class="line">  value2)</span><br><span class="line">    statements</span><br><span class="line">    <span class="built_in">break</span></span><br><span class="line">;;</span><br><span class="line">  *)</span><br><span class="line">    statements</span><br><span class="line">;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### for statement</span></span><br><span class="line"><span class="keyword">for</span> arg <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> arg</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$arg</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> $(<span class="built_in">ls</span>)</span><br><span class="line"><span class="keyword">for</span> num <span class="keyword">in</span> 1 2 3 4 5</span><br><span class="line"><span class="keyword">for</span> ((i=<span class="number">1</span>; i&lt;=<span class="number">5</span>; i++))</span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> &#123;1..5&#125;</span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> &#123;1..100..2&#125;</span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line"> statements</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### while 条件为真, 条件退出状态为0 </span></span><br><span class="line">i=1</span><br><span class="line"><span class="keyword">while</span> ((i &lt;= <span class="number">6</span> ))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$i</span></span><br><span class="line">    <span class="built_in">let</span> <span class="string">&quot;i++&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### until 条件为假时执行循环</span></span><br><span class="line"><span class="keyword">until</span> <span class="built_in">who</span> |grep <span class="string">&quot;root&quot;</span> &amp;&gt; /dev/null</span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line"> <span class="built_in">echo</span> <span class="string">&quot;<span class="subst">$(date)</span> root not login&quot;</span></span><br><span class="line"> <span class="built_in">sleep</span> 3</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### select </span></span><br><span class="line">```bash</span><br><span class="line">[root@localhost ~]<span class="comment"># select color in &quot;red&quot; &quot;blue&quot; &quot;green&quot;</span></span><br><span class="line">&gt; <span class="keyword">do</span></span><br><span class="line">&gt; <span class="built_in">break</span></span><br><span class="line">&gt; <span class="keyword">done</span></span><br><span class="line">1) red</span><br><span class="line">2) blue</span><br><span class="line">3) green</span><br><span class="line"><span class="comment">#? 2</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $color</span></span><br><span class="line">blue</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>不带参数, 直接从命令行取$* 或$@</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bash a.sh red bule green</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Please select you color:&quot;</span></span><br><span class="line"><span class="keyword">select</span> color</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">break</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;You color is <span class="variable">$color</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="定义数组"><a href="#定义数组" class="headerlink" title="定义数组"></a>定义数组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># arr1=(&quot;a&quot; &quot;b&quot; &quot;c&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr1[0]&#125;</span></span><br><span class="line">a</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr1[1]&#125;</span></span><br><span class="line">b</span><br></pre></td></tr></table></figure>
+
+<h4 id="declare"><a href="#declare" class="headerlink" title="declare"></a>declare</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># declare -a arr2</span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr2[1]=&quot;aa&quot;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr2[2]=&quot;bb&quot;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr2&#125;</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr2[@]&#125;</span></span><br><span class="line">aa bb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="指定键值"><a href="#指定键值" class="headerlink" title="指定键值"></a>指定键值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># arr3=([0]=&quot;aaa&quot; [2]=&quot;bbb&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3[2]&#125;</span></span><br><span class="line">bbb</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3[1]&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="关联数组"><a href="#关联数组" class="headerlink" title="关联数组"></a>关联数组</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">arr4=([age]=18 [sex]=<span class="string">&quot;girl&quot;</span> [class]=<span class="string">&quot;2008&quot;</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr4[age]&#125;</span>    <span class="comment"># Should output: 18</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr4[class]&#125;</span>  <span class="comment"># Should output: 2008</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr4[sex]&#125;</span>    <span class="comment"># Should output: girl</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数组长度"><a href="#数组长度" class="headerlink" title="数组长度"></a>数组长度</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示全部元素</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3[@]&#125;</span></span><br><span class="line">aaa bbb</span><br><span class="line"><span class="comment">#数组名代名第一个元素</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3&#125;</span></span><br><span class="line">aaa</span><br><span class="line"><span class="comment">#全部元素个数</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;#arr3[@]&#125;</span></span><br><span class="line">2</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;#arr3[*]&#125;</span></span><br><span class="line">2</span><br><span class="line"><span class="comment">#某个元素的长度</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;#arr3[2]&#125;</span></span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<h3 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h3><p>for i in “${array[@]}”</p>
+<h3 id="数组切片"><a href="#数组切片" class="headerlink" title="数组切片"></a>数组切片</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#元素从0开始, </span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr3=([0]=&quot;aaa&quot; [1]=&quot;bbb&quot; [2]=&quot;ccc&quot; [3]=&quot;ddd&quot; [4]=&quot;eee&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]:1:1&#125;&quot;</span></span><br><span class="line">bbb</span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]:1:2&#125;&quot;</span></span><br><span class="line">bbb ccc</span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]:2:4&#125;&quot;</span></span><br><span class="line">ccc ddd eee</span><br></pre></td></tr></table></figure>
+<h3 id="数组替换-复制-删除"><a href="#数组替换-复制-删除" class="headerlink" title="数组替换, 复制, 删除"></a>数组替换, 复制, 删除</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># arr3=([0]=&quot;aaa&quot; [1]=&quot;bbb&quot; [2]=&quot;ccc&quot; [3]=&quot;ddd&quot; [4]=&quot;eee&quot;)</span></span><br><span class="line"><span class="comment">#元素替换</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]/ccc/hhh&#125;&quot;</span></span><br><span class="line">aaa bbb hhh ddd eee</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除数组, unset 不能用$array, 这样没有效果, 如下</span></span><br><span class="line">[root@localhost ~]<span class="comment"># unset $&#123;arr3[2]&#125;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]&#125;&quot;</span></span><br><span class="line">aaa bbb ccc ddd eee</span><br><span class="line">[root@localhost ~]<span class="comment"># unset $arr3</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]&#125;&quot;</span></span><br><span class="line">aaa bbb ccc ddd eee</span><br><span class="line"><span class="comment">#删除一个元素</span></span><br><span class="line">[root@localhost ~]<span class="comment"># unset arr3[2]</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]&#125;&quot;</span></span><br><span class="line">aaa bbb ddd ee</span><br><span class="line"><span class="comment">#删除全部</span></span><br><span class="line">[root@localhost ~]<span class="comment"># unset arr3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#复制数组</span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr3=([0]=&quot;aaa&quot; [1]=&quot;bbb&quot; [2]=&quot;ccc&quot; [3]=&quot;ddd&quot; [4]=&quot;eee&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr4=(&quot;$&#123;arr3[@]&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr4[@]&#125;</span></span><br><span class="line">aaa bbb ccc ddd eee</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># unset arr4[2]</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr4[@]&#125;</span></span><br><span class="line">aaa bbb ddd eee</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3[@]&#125;</span></span><br><span class="line">aaa bbb ccc ddd eee</span><br><span class="line"></span><br><span class="line"><span class="comment">#连接数组</span></span><br><span class="line">[root@localhost ~]<span class="comment"># c=(&quot;$&#123;arr3[@]&#125;&quot; &quot;$&#123;arr4[@]&#125;&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;c[@]&#125;</span></span><br><span class="line">aaa bbb ccc ddd eee aaa bbb ddd eee</span><br><span class="line"></span><br><span class="line"><span class="comment">#将文本内容加载到数组</span></span><br><span class="line">[root@localhost ~]<span class="comment"># cat &gt;aaaa.txt &lt;&lt;name</span></span><br><span class="line">aaa</span><br><span class="line">bb</span><br><span class="line">cc</span><br><span class="line"><span class="built_in">dd</span></span><br><span class="line">eee</span><br><span class="line">name</span><br><span class="line"></span><br><span class="line">items=$(<span class="built_in">cat</span> aaaa.txt)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$&#123;items[@]&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"> <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;i&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ol>
+<li>函数名和 { 之间必须有空格</li>
+<li>不得声明形式参数</li>
+<li>必须在调用前声明</li>
+<li>无法重载</li>
+<li>后面的声明会覆盖之前的</li>
+<li>return 0-255</li>
+<li>$# 参数个数, 没有是0</li>
+<li>$@,$* 所有参数</li>
+<li>$0 函数名</li>
+<li>$1开始, 具体参数值</li>
+<li>函数内部变量与全局变量重名, 使用local关键字</li>
+<li>可以定义函数在~&#x2F;.bash_profile 或 ~&#x2F;.bashrc,不用时可以unset, 使用时当作命令用</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">test</span></span>() </span><br><span class="line">&#123;</span><br><span class="line">    a=<span class="string">&quot;hello world! <span class="variable">$1</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;a=<span class="variable">$&#123;a&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">res=$(<span class="built_in">test</span> <span class="string">&quot;nihao&quot;</span>)</span><br><span class="line"></span><br><span class="line">the result is a=hello world! nihao</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># tail -5 .bashrc</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">hi</span></span>()</span><br><span class="line">&#123;</span><br><span class="line"> <span class="built_in">echo</span> <span class="string">&quot;Hello world!&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># . .bashrc</span></span><br><span class="line">[root@localhost ~]<span class="comment"># hi</span></span><br><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/02/21/Linux-shell-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="cltr83b4d0001g1o60s1k9mxf" data-title="Linux-shell-学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/03/17/Pytest-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Pytest 学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/14/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/11/Java-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Lambda/">Java 学习笔记--Lambda</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/21/Windows%E4%B8%8A%E5%A2%9E%E5%8A%A0Ssh-key%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">Github：Windows上增加Ssh key遇到的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/21/Linux-shell-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Linux-shell-学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Java 学习笔记--Lambda | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="语法 一个参数 12msg -&gt; System.out.println(msg)一个参数无需() 多个参数 12(a, b) -&gt; a + b参数无需类型声明, 函数体内单条语句,无需return, 也不需要花括号 无参 1() -\&gt; System.out.println(&quot;Hello world&quot;)  多条语句 12345(a, b) -\&gt; &amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 学习笔记--Lambda">
+<meta property="og:url" content="http://example.com/2024/03/11/Java-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Lambda/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="语法 一个参数 12msg -&gt; System.out.println(msg)一个参数无需() 多个参数 12(a, b) -&gt; a + b参数无需类型声明, 函数体内单条语句,无需return, 也不需要花括号 无参 1() -\&gt; System.out.println(&quot;Hello world&quot;)  多条语句 12345(a, b) -\&gt; &amp;#1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-03-11T13:42:15.000Z">
+<meta property="article:modified_time" content="2024-03-11T14:06:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Java-学习笔记-Lambda" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/03/11/Java-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Lambda/" class="article-date">
+  <time class="dt-published" datetime="2024-03-11T13:42:15.000Z" itemprop="datePublished">2024-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Java 学习笔记--Lambda
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ol>
+<li><p>一个参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msg -&gt; System.out.println(msg)</span><br><span class="line">一个参数无需()</span><br></pre></td></tr></table></figure></li>
+<li><p>多个参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(a, b) -&gt; a + b</span><br><span class="line">参数无需类型声明, 函数体内单条语句,无需return, 也不需要花括号</span><br></pre></td></tr></table></figure></li>
+<li><p>无参</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -\&gt; System.out.println(&quot;Hello world&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多条语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(a, b) -\&gt; &#123;</span><br><span class="line">  a = a * b;</span><br><span class="line">  b = b * a;</span><br><span class="line">&#125;</span><br><span class="line">多条语句返回需要return, 且需要用花括号</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>空函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -\&gt; &#123;&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>要求Lambda表达式实现的接口只能有一个抽象的方法, 这样的接口称为函数式接口.<br>为了避免接口中出现多个抽象方法, 可以接口上使用@FunctionalInterface注解, 声明该接口是一个函数式接口,如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">MathOperation</span>&#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">operation</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><ul>
+<li>对象 :: 实例方法名</li>
+<li>类名 :: 静态方法名</li>
+<li>类名 :: 实例方法名</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.function.BiPredicate;</span><br><span class="line"><span class="keyword">import</span> java.util.function.BinaryOperator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MathUtil</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">add</span> <span class="params">(<span class="type">int</span> a , <span class="type">int</span> b)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">subtract</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> a - b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MethodRef</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">operate</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, BinaryOperator&lt;Integer&gt; operator)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> operator.apply(a, b);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">MathUtil</span> <span class="variable">math</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MathUtil</span>();</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">addRes1</span> <span class="operator">=</span> operate(<span class="number">5</span>, <span class="number">3</span>, math::add);</span><br><span class="line">        <span class="type">int</span> <span class="variable">addRes2</span> <span class="operator">=</span> operate( <span class="number">5</span>, <span class="number">3</span>, (a, b) -&gt; math.add(a, b));</span><br><span class="line">        System.out.println(String.format(<span class="string">&quot;%d + %d = res1(%d), res2(%d)&quot;</span>, <span class="number">5</span>, <span class="number">3</span>, addRes1, addRes2));</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> <span class="variable">subRes1</span> <span class="operator">=</span> operate(<span class="number">5</span>, <span class="number">3</span>, MathUtil::subtract);</span><br><span class="line">        <span class="type">int</span> <span class="variable">subRes2</span> <span class="operator">=</span> operate(<span class="number">5</span>, <span class="number">3</span>, (a, b) -&gt; MathUtil.subtract(a, b));</span><br><span class="line">        System.out.println(String.format(<span class="string">&quot;%d - %d = res1(%d), res2(%d)&quot;</span>, <span class="number">5</span>, <span class="number">3</span>, subRes1, subRes2));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//类名 :: 实例方法名, 这里是将函数式接口方法的第一个参数作为调用实例方法的对象, 接口方法的其它参数作为实例方法的参数.</span></span><br><span class="line">        BiPredicate&lt;String, String&gt; bp1 = String::equals;</span><br><span class="line">        BiPredicate&lt;String, String&gt; bp2 = (a, b) -&gt; a.equals(b);</span><br><span class="line">        System.out.println(bp1.test(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>));</span><br><span class="line">        System.out.println(bp2.test(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">output:</span><br><span class="line"><span class="number">5</span> + <span class="number">3</span> = res1(<span class="number">8</span>), res2(<span class="number">8</span>)</span><br><span class="line"><span class="number">5</span> - <span class="number">3</span> = res1(<span class="number">2</span>), res2(<span class="number">2</span>)</span><br><span class="line"><span class="literal">false</span></span><br><span class="line"><span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="构造方法引用"><a href="#构造方法引用" class="headerlink" title="构造方法引用"></a>构造方法引用</h3><p><strong>类名::new</strong><br>对应的函数式接口中的方法需要有返回值, 构造方法的参数列表要与接口中方法的参数列表一致.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.function.BiFunction;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Function;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Supplier;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> no;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>(<span class="number">0</span>, <span class="string">&quot;None&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(<span class="type">int</span> no)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>(no, <span class="string">&quot;None&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(<span class="type">int</span> no , String name)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.no = no;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> no + <span class="string">&quot; : &quot;</span> + name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConstructorRef</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        Supplier&lt;Student&gt; s1 = Student::<span class="keyword">new</span>;</span><br><span class="line">        Supplier&lt;Student&gt; s2 = () -&gt; <span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line">        System.out.println(s1.get());</span><br><span class="line">        System.out.println(s2.get());</span><br><span class="line"></span><br><span class="line">        Function&lt;Integer, Student&gt; fun1 = Student::<span class="keyword">new</span>;</span><br><span class="line">        Function&lt;Integer, Student&gt; fun2 = no -&gt; <span class="keyword">new</span> <span class="title class_">Student</span>(no);</span><br><span class="line">        System.out.println(fun1.apply(<span class="number">1</span>));</span><br><span class="line">        System.out.println(fun2.apply(<span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">        BiFunction&lt;Integer, String, Student&gt; biFun1 = Student::<span class="keyword">new</span>;</span><br><span class="line">        BiFunction&lt;Integer, String, Student&gt; biFun2 = (no, name) -&gt; <span class="keyword">new</span> <span class="title class_">Student</span>(no, name);</span><br><span class="line">        System.out.println(biFun1.apply(<span class="number">1</span>, <span class="string">&quot;name1&quot;</span>));</span><br><span class="line">        System.out.println(biFun2.apply(<span class="number">2</span>, <span class="string">&quot;name2&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h3 id="数组引用"><a href="#数组引用" class="headerlink" title="数组引用"></a>数组引用</h3><p><strong>type[]::new</strong> 例如Integer[]::new, 与构造方法类似.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">        Function&lt;Integer, Integer[]&gt; fun1 = Integer[]::<span class="keyword">new</span>;</span><br><span class="line">        Function&lt;Integer, Integer[]&gt; fun2 = (n) -&gt;<span class="keyword">new</span> <span class="title class_">Integer</span>[n];</span><br><span class="line">        Integer[] intArr = fun1.apply(<span class="number">10</span>);</span><br><span class="line">        Integer[] intArr2 = fun2.apply(<span class="number">10</span>);</span><br><span class="line">        System.out.println(String.format(<span class="string">&quot;Array 1 size is %d&quot;</span>, intArr.length));</span><br><span class="line">        System.out.println(String.format(<span class="string">&quot;Array 2 size is %d&quot;</span>, intArr2.length));</span><br><span class="line"></span><br><span class="line">output:</span><br><span class="line">Array <span class="number">1</span> size is <span class="number">10</span></span><br><span class="line">Array <span class="number">2</span> size is <span class="number">10</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/03/11/Java-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Lambda/" data-id="cltr83b4b0000g1o65yaig2wz" data-title="Java 学习笔记--Lambda" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/03/14/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/02/21/Windows%E4%B8%8A%E5%A2%9E%E5%8A%A0Ssh-key%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Github：Windows上增加Ssh key遇到的问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/03/17/Pytest-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Pytest 学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/14/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/11/Java-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Lambda/">Java 学习笔记--Lambda</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/21/Windows%E4%B8%8A%E5%A2%9E%E5%8A%A0Ssh-key%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">Github：Windows上增加Ssh key遇到的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/02/21/Linux-shell-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Linux-shell-学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
