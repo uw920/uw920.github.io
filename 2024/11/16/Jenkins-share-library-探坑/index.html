@@ -14,8 +14,9 @@
 <meta property="og:description" content="因一个自动化测试项目, 运行在docker container中, Jenkins pipeline需要获取测试用例的运行结果, 来决定本次运行的最终结果. 一开始比较想当然的使用share library, 读取自动生成的Junit格式的xml, 然后使用Groovy内置的XmlParser来解析, 并分析得到是否有失败, 跳过的测试用例, 确认本次的运行结果 代码如下 123456789101">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-11-16T15:52:52.000Z">
-<meta property="article:modified_time" content="2024-11-16T15:54:29.281Z">
+<meta property="article:modified_time" content="2024-11-16T15:55:33.252Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Jenkins">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -203,6 +204,8 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li></ul>
+
     </footer>
   </div>
   
@@ -232,7 +235,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li></ul>
     </div>
   </div>
 
@@ -242,7 +245,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a>
+      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a>
     </div>
   </div>
 
