@@ -69,6 +69,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-解压解析websocket的bytes数据" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/17/%E8%A7%A3%E5%8E%8B%E8%A7%A3%E6%9E%90websocket%E7%9A%84bytes%E6%95%B0%E6%8D%AE/" class="article-date">
+  <time class="dt-published" datetime="2024-11-16T16:03:40.000Z" itemprop="datePublished">2024-11-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/17/%E8%A7%A3%E5%8E%8B%E8%A7%A3%E6%9E%90websocket%E7%9A%84bytes%E6%95%B0%E6%8D%AE/">解压解析websocket的bytes数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="解压解析websocket的bytes数据"><a href="#解压解析websocket的bytes数据" class="headerlink" title="解压解析websocket的bytes数据"></a>解压解析websocket的bytes数据</h1><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> websockets</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;wss://test.site.com/ws/v2?k=Key&amp;authorization=Bearer%20token&amp;p=doc_id&amp;v=1&#x27;</span></span><br><span class="line">cmd = <span class="string">&#x27;&#123;&quot;c&quot;:&quot;GetVisualData2&quot;,&quot;o&quot;:[&quot;bf9c36d9-dfc2-4fea-b2cb-c38e05f5033f&quot;],&quot;s&quot;:&quot;eb7d5043-ee20-43d5-8161-d6baa44dd231&quot;,&quot;i&quot;:11,&quot;z&quot;:true&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">hello</span>(<span class="params">uri</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> websockets.connect(uri) <span class="keyword">as</span> websocket:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> websocket.send(cmd)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;(client) send to server: <span class="subst">&#123;cmd&#125;</span>&quot;</span>)</span><br><span class="line">        res = <span class="keyword">await</span> websocket.recv()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;(client) recv from server <span class="subst">&#123;res&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">type</span>(res) == <span class="built_in">bytes</span>):</span><br><span class="line">            decompressed_data = zlib.decompress(res)</span><br><span class="line">            rawStr = decompressed_data.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(rawStr)</span><br><span class="line">            jObj = json.loads(rawStr)</span><br><span class="line">            <span class="built_in">print</span>(jObj)</span><br><span class="line">            <span class="built_in">print</span>(jObj[<span class="string">&#x27;data&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;category&#x27;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">asyncio.run(hello(url))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.example;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.StandardCharsets;</span><br><span class="line"><span class="keyword">import</span> java.util.HexFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.zip.DataFormatException;</span><br><span class="line"><span class="keyword">import</span> java.util.zip.Inflater;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WsBinaryDataParser</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] parseBinaryData(<span class="type">byte</span>[] input)  &#123;</span><br><span class="line">        <span class="type">Inflater</span> <span class="variable">inflater</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Inflater</span>();</span><br><span class="line">        inflater.setInput(input);</span><br><span class="line">        <span class="type">byte</span>[] bytes = <span class="string">&quot;hello&quot;</span>.getBytes(StandardCharsets.UTF_8);</span><br><span class="line">        <span class="type">ByteArrayOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">        <span class="type">byte</span>[] buffer = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!inflater.finished()) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">decompressedSize</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                decompressedSize = inflater.inflate(buffer);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (DataFormatException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            outputStream.write(buffer, <span class="number">0</span>, decompressedSize);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> outputStream.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> DataFormatException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">hex</span> <span class="operator">=</span> <span class="string">&quot;789c7590414fc3300c85ff8bcf6995387696f4c601892312dca61dda241d15b0566b37314dfc771cca89812245f1d3b3dfe75c218e2943a315bce7796ef7f286f914a314a060b94c45380ff3a97d937a38a4fc018d310a52bbb4d06caf70cec779180fd0a082d82e793f1e2fd2f3f470f7785f5a92145d1fa2752954a98f58519fdbaac3d855d1faacb9676d6d2f5e19b50c120dcd1596711a9fd7f8691c0e4ba1114922b715dada39bda1408c8ec9aa0ab94643da790ebcf1ec94aef54e89d3d46c7c70861c9143719a506b226fd9e840d6db6fe74ec134c4d77538d6ec83672696cb5b4daa680625cd78093426385edb3ed50a27c45b9991d3bec0cba7c867befca22fd25ff4b8c15b7ef2ff6d60ddcd0ee87f68caf902e3617c25&quot;</span>;</span><br><span class="line">        <span class="type">byte</span>[] raw = HexFormat.of().parseHex(hex);</span><br><span class="line">        <span class="type">byte</span>[] uncompressRaw = WsBinaryDataParser.parseBinaryData(raw);</span><br><span class="line">        System.out.println(<span class="keyword">new</span> <span class="title class_">String</span>(uncompressRaw, StandardCharsets.UTF_8));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/17/%E8%A7%A3%E5%8E%8B%E8%A7%A3%E6%9E%90websocket%E7%9A%84bytes%E6%95%B0%E6%8D%AE/" data-id="cm3kcypt00000d2qg9eb4ftlm" data-title="解压解析websocket的bytes数据" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python-Java/" rel="tag">Python Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Jenkins-设置Git凭据的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
@@ -1052,746 +1100,12 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
 
 
   
-    <article id="post-Linux-shell-学习笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/02/21/Linux-shell-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
-  <time class="dt-published" datetime="2024-02-21T12:18:24.000Z" itemprop="datePublished">2024-02-21</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/02/21/Linux-shell-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">Linux-shell-学习笔记</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Markdown"><a href="#Markdown" class="headerlink" title="Markdown"></a>Markdown</h2><table>
-<thead>
-<tr>
-<th>language</th>
-<th>key</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>C</td>
-<td>c</td>
-</tr>
-<tr>
-<td>ActionScript</td>
-<td>actionscript</td>
-</tr>
-<tr>
-<td>Apache</td>
-<td>apache</td>
-</tr>
-<tr>
-<td>AppleScript</td>
-<td>applescript</td>
-</tr>
-<tr>
-<td>AsciiDoc</td>
-<td>asciidoc</td>
-</tr>
-<tr>
-<td>AspectJ</td>
-<td>asciidoc</td>
-</tr>
-<tr>
-<td>AutoHotkey</td>
-<td>autohotkey</td>
-</tr>
-<tr>
-<td>AVR Assembler</td>
-<td>avrasm</td>
-</tr>
-<tr>
-<td>Axapta</td>
-<td>axapta</td>
-</tr>
-<tr>
-<td>Bash</td>
-<td>bash</td>
-</tr>
-<tr>
-<td>BrainFuck</td>
-<td>brainfuck</td>
-</tr>
-<tr>
-<td>Cap’n Proto</td>
-<td>capnproto</td>
-</tr>
-<tr>
-<td>Clojure REPL</td>
-<td>clojure</td>
-</tr>
-<tr>
-<td>Clojure</td>
-<td>clojure</td>
-</tr>
-<tr>
-<td>CMake</td>
-<td>cmake</td>
-</tr>
-<tr>
-<td>CoffeeScript</td>
-<td>coffeescript</td>
-</tr>
-<tr>
-<td>C++</td>
-<td>cpp</td>
-</tr>
-<tr>
-<td>C#</td>
-<td>cs</td>
-</tr>
-<tr>
-<td>CSS</td>
-<td>css</td>
-</tr>
-<tr>
-<td>D</td>
-<td>d</td>
-</tr>
-<tr>
-<td>Dart</td>
-<td>d</td>
-</tr>
-<tr>
-<td>Delphi</td>
-<td>delphi</td>
-</tr>
-<tr>
-<td>Diff</td>
-<td>diff</td>
-</tr>
-<tr>
-<td>Django</td>
-<td>django</td>
-</tr>
-<tr>
-<td>DOS.bat</td>
-<td>dos</td>
-</tr>
-<tr>
-<td>Dust</td>
-<td>dust</td>
-</tr>
-<tr>
-<td>Elixir</td>
-<td>elixir</td>
-</tr>
-<tr>
-<td>ERB(Embedded Ruby)</td>
-<td>erb</td>
-</tr>
-<tr>
-<td>Erlang REPL</td>
-<td>erlang-repl</td>
-</tr>
-<tr>
-<td>Erlang</td>
-<td>erlang</td>
-</tr>
-<tr>
-<td>FIX</td>
-<td>fix</td>
-</tr>
-<tr>
-<td>F#</td>
-<td>fsharp</td>
-</tr>
-<tr>
-<td>G-code(ISO 6983)</td>
-<td>gcode</td>
-</tr>
-<tr>
-<td>Gherkin</td>
-<td>gherkin</td>
-</tr>
-<tr>
-<td>GLSL</td>
-<td>glsl</td>
-</tr>
-<tr>
-<td>Go</td>
-<td>go</td>
-</tr>
-<tr>
-<td>Gradle</td>
-<td>gradle</td>
-</tr>
-<tr>
-<td>Groovy</td>
-<td>groovy</td>
-</tr>
-<tr>
-<td>Haml</td>
-<td>haml</td>
-</tr>
-<tr>
-<td>Handlebars</td>
-<td>handlebars</td>
-</tr>
-<tr>
-<td>Haskell</td>
-<td>haskell</td>
-</tr>
-<tr>
-<td>Haxe</td>
-<td>haxe</td>
-</tr>
-<tr>
-<td>HTML</td>
-<td>html</td>
-</tr>
-<tr>
-<td>HTTP</td>
-<td>http</td>
-</tr>
-<tr>
-<td>Ini file</td>
-<td>ini</td>
-</tr>
-<tr>
-<td>Java</td>
-<td>java</td>
-</tr>
-<tr>
-<td>JavaScript</td>
-<td>javascript</td>
-</tr>
-<tr>
-<td>JSON</td>
-<td>json</td>
-</tr>
-<tr>
-<td>Lasso</td>
-<td>lasso</td>
-</tr>
-<tr>
-<td>Less</td>
-<td>less</td>
-</tr>
-<tr>
-<td>Lisp</td>
-<td>lisp</td>
-</tr>
-<tr>
-<td>LiveCode</td>
-<td>livecodeserver</td>
-</tr>
-<tr>
-<td>LiveScript</td>
-<td>livescript</td>
-</tr>
-<tr>
-<td>Lua</td>
-<td>lua</td>
-</tr>
-<tr>
-<td>Makefile</td>
-<td>makefile</td>
-</tr>
-<tr>
-<td>Markdown</td>
-<td>markdown</td>
-</tr>
-<tr>
-<td>Mathematica</td>
-<td>mathematica</td>
-</tr>
-<tr>
-<td>Matlab</td>
-<td>matlab</td>
-</tr>
-<tr>
-<td>MEL (Maya Embedded Language)</td>
-<td>mel</td>
-</tr>
-<tr>
-<td>Mercury</td>
-<td>mercury</td>
-</tr>
-<tr>
-<td>Mizar</td>
-<td>mizar</td>
-</tr>
-<tr>
-<td>Monkey</td>
-<td>monkey</td>
-</tr>
-<tr>
-<td>Nginx</td>
-<td>nginx</td>
-</tr>
-<tr>
-<td>Nimrod</td>
-<td>nimrod</td>
-</tr>
-<tr>
-<td>Nix</td>
-<td>nix</td>
-</tr>
-<tr>
-<td>NSIS</td>
-<td>nsis</td>
-</tr>
-<tr>
-<td>Objective C</td>
-<td>objectivec</td>
-</tr>
-<tr>
-<td>OCaml</td>
-<td>ocaml</td>
-</tr>
-<tr>
-<td>Oxygene</td>
-<td>oxygene</td>
-</tr>
-<tr>
-<td>Parser 3</td>
-<td>parser3</td>
-</tr>
-<tr>
-<td>Perl</td>
-<td>perl</td>
-</tr>
-<tr>
-<td>PHP</td>
-<td>php</td>
-</tr>
-<tr>
-<td>PowerShell</td>
-<td>powershell</td>
-</tr>
-<tr>
-<td>Processing</td>
-<td>processing</td>
-</tr>
-<tr>
-<td>Python’s profiler output</td>
-<td>profile</td>
-</tr>
-<tr>
-<td>Protocol Buffers</td>
-<td>protobuf</td>
-</tr>
-<tr>
-<td>Puppet</td>
-<td>puppet</td>
-</tr>
-<tr>
-<td>Python</td>
-<td>python</td>
-</tr>
-<tr>
-<td>Q</td>
-<td>q</td>
-</tr>
-<tr>
-<td>R</td>
-<td>r</td>
-</tr>
-<tr>
-<td>RenderMan RIB</td>
-<td>rib</td>
-</tr>
-<tr>
-<td>Roboconf</td>
-<td>roboconf</td>
-</tr>
-<tr>
-<td>RenderMan RSL</td>
-<td>rsl</td>
-</tr>
-<tr>
-<td>Ruby</td>
-<td>ruby</td>
-</tr>
-<tr>
-<td>Oracle Rules Language</td>
-<td>ruleslanguage</td>
-</tr>
-<tr>
-<td>Rust</td>
-<td>rust</td>
-</tr>
-<tr>
-<td>Scala</td>
-<td>scala</td>
-</tr>
-<tr>
-<td>Scheme</td>
-<td>scheme</td>
-</tr>
-<tr>
-<td>Scilab</td>
-<td>scilab</td>
-</tr>
-<tr>
-<td>SCSS</td>
-<td>scss</td>
-</tr>
-<tr>
-<td>Smali</td>
-<td>smali</td>
-</tr>
-<tr>
-<td>SmallTalk</td>
-<td>smalltalk</td>
-</tr>
-<tr>
-<td>SML</td>
-<td>sml</td>
-</tr>
-<tr>
-<td>SQL</td>
-<td>sql</td>
-</tr>
-<tr>
-<td>Stata</td>
-<td>stata</td>
-</tr>
-<tr>
-<td>STEP Part21(ISO 10303-21)</td>
-<td>step21</td>
-</tr>
-<tr>
-<td>Stylus</td>
-<td>stylus</td>
-</tr>
-<tr>
-<td>Swift</td>
-<td>swift</td>
-</tr>
-<tr>
-<td>Tcl</td>
-<td>tcl</td>
-</tr>
-<tr>
-<td>Tex</td>
-<td>tex</td>
-</tr>
-<tr>
-<td>text</td>
-<td>text&#x2F;plain</td>
-</tr>
-<tr>
-<td>Thrift</td>
-<td>thrift</td>
-</tr>
-<tr>
-<td>Twig</td>
-<td>twig</td>
-</tr>
-<tr>
-<td>TypeScript</td>
-<td>typescript</td>
-</tr>
-<tr>
-<td>Vala</td>
-<td>vala</td>
-</tr>
-<tr>
-<td>VB.NET</td>
-<td>vbnet</td>
-</tr>
-<tr>
-<td>VBScript in HTML</td>
-<td>vbscript-html</td>
-</tr>
-<tr>
-<td>VBScript</td>
-<td>vbscript</td>
-</tr>
-<tr>
-<td>Verilog</td>
-<td>verilog</td>
-</tr>
-<tr>
-<td>VHDL</td>
-<td>vhdl</td>
-</tr>
-<tr>
-<td>Vim Script</td>
-<td>vim</td>
-</tr>
-<tr>
-<td>Intel x86 Assembly</td>
-<td>x86asm</td>
-</tr>
-<tr>
-<td>XL</td>
-<td>xl</td>
-</tr>
-<tr>
-<td>XML</td>
-<td>xml</td>
-</tr>
-<tr>
-<td>YAML</td>
-<td>yml</td>
-</tr>
-</tbody></table>
-<h1 id="Bash-login-priority"><a href="#Bash-login-priority" class="headerlink" title="Bash login priority"></a>Bash login priority</h1><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">       -------------/etc/profile----------</span><br><span class="line">       |               |                 |</span><br><span class="line">~/.bash_profile    ~/.bash_login   ~/.profile</span><br><span class="line">       \               |              /</span><br><span class="line">        \              |             / </span><br><span class="line">                   ~/.bashrc</span><br><span class="line">                       |</span><br><span class="line">                       |</span><br><span class="line">                   /etc/bashrc</span><br><span class="line">                       |</span><br><span class="line">                       |</span><br><span class="line">                   ~/.bash_logout </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ol>
-<li>&#x2F;etc&#x2F;profile</li>
-<li>&#x2F;etc&#x2F;bashrc</li>
-<li>~&#x2F;.bashrc</li>
-<li>~&#x2F;.bash_profile</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">s =&gt;start: Login</span><br><span class="line">e =&gt;end: Logout</span><br><span class="line">etcPro=&gt;operation: /etc/profile</span><br><span class="line">bashPro=&gt;operation: ~/.bash_profile</span><br><span class="line">bashLogin=&gt;operation: ~/.bash_login</span><br><span class="line">myPro=&gt;operation: ~/.profile</span><br><span class="line">bashRc=&gt;operation: ~/.bashrc</span><br><span class="line">etcRc=&gt;operation: /etc/bashrc</span><br><span class="line">bashOut=&gt;operation: ~/.bash_logout </span><br><span class="line">s--&gt;etcPro--&gt;e</span><br></pre></td></tr></table></figure>
-
-<h2 id="Shell-注释"><a href="#Shell-注释" class="headerlink" title="Shell 注释"></a>Shell 注释</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">: &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">statement1</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="命令执行顺序"><a href="#命令执行顺序" class="headerlink" title="命令执行顺序"></a>命令执行顺序</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt &amp;&amp;  echo &quot;File exists.&quot; || echo &quot;File not exists.&quot;</span></span><br><span class="line">-rw-r--r--. 1 root root 0 Jan  1 04:34 d.txt</span><br><span class="line">File exists.</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt ||  echo &quot;File exists.&quot; || echo &quot;File not exists.&quot;</span></span><br><span class="line">-rw-r--r--. 1 root root 0 Jan  1 04:34 d.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l e.txt &amp;&amp;  echo &quot;File exists.&quot; || echo &quot;File not exists.&quot;</span></span><br><span class="line"><span class="built_in">ls</span>: cannot access e.txt: No such file or directory</span><br><span class="line">File not exists.</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l e.txt &amp;&amp;  echo &quot;File exists.&quot; &amp;&amp; echo &quot;File not exists.&quot;</span></span><br><span class="line"><span class="built_in">ls</span>: cannot access e.txt: No such file or directory</span><br></pre></td></tr></table></figure>
-
-<p><strong>执行多条命令</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># who ; whoami ; uptime</span></span><br><span class="line">root     pts/1        2024-01-01 04:28 (u33)</span><br><span class="line">root</span><br><span class="line"> 04:56:37 up  2:42,  1 user,  load average: 0.00, 0.01, 0.05</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># expr 6+6</span></span><br><span class="line">6+6</span><br><span class="line">[root@localhost ~]<span class="comment"># expr 6 + 6</span></span><br><span class="line">12</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># let a=6+6</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $a</span></span><br><span class="line">12</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $[6+6]</span></span><br><span class="line">12</span><br></pre></td></tr></table></figure>
-
-<h3 id="整数运算-let-expr-bc"><a href="#整数运算-let-expr-bc" class="headerlink" title="整数运算 $[] (()) let  expr bc"></a>整数运算 $[] (()) let  expr bc</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># echo $[1+6]</span></span><br><span class="line">7</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># res1=$[1+6]</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $res1</span></span><br><span class="line">7</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># ((res1=1, res2=res1+6))</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$res1, $res2&quot;</span></span><br><span class="line">1, 7</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># let res1=1+7</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $res1</span></span><br><span class="line">8</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;10^2&quot; |bc</span></span><br><span class="line">100</span><br></pre></td></tr></table></figure>
-
-<h2 id="清空文件"><a href="#清空文件" class="headerlink" title="清空文件"></a>清空文件</h2><h3 id="长度为0"><a href="#长度为0" class="headerlink" title="长度为0"></a>长度为0</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># : &gt;d.txt</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt</span></span><br><span class="line">-rw-r--r--. 1 root root 0 Dec 31 11:32 d.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># cat /dev/null &gt;d.txt</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt</span></span><br><span class="line">-rw-r--r--. 1 root root 0 Dec 31 11:34 d.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># cp /dev/null d.txt</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># truncate -s 0 d.txt</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="长度为1"><a href="#长度为1" class="headerlink" title="长度为1"></a>长度为1</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># echo &quot;&quot; &gt; d.txt</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ls -l d.txt</span></span><br><span class="line">-rw-r--r--. 1 root root 1 Dec 31 11:35 d.txt</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># expr length “aab”</span></span><br><span class="line">9</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;aab&quot; |wc -L</span></span><br><span class="line">3</span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;aab&quot; |wc -c </span></span><br><span class="line">4 (换行)</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># expr &quot;$&#123;str&#125;&quot;</span></span><br><span class="line">abcde</span><br><span class="line">[root@localhost ~]<span class="comment"># expr &quot;$&#123;str&#125;&quot; : &quot;.*&quot;</span></span><br><span class="line">5</span><br></pre></td></tr></table></figure>
-
-<h3 id="截取字符串"><a href="#截取字符串" class="headerlink" title="截取字符串"></a>截取字符串</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># str=&quot;You like Linux so much&quot;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str:1&#125;</span></span><br><span class="line">ou like Linux so much</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str:2&#125;</span></span><br><span class="line">u like Linux so much</span><br></pre></td></tr></table></figure>
-<p>** 截取后面8位或者4位 **</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str:4:8&#125;</span></span><br><span class="line">like Lin</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str:4:4&#125;</span></span><br><span class="line">like</span><br></pre></td></tr></table></figure>
-<h3 id="替换字符串"><a href="#替换字符串" class="headerlink" title="替换字符串"></a>替换字符串</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;str/like/love&#125;</span></span><br><span class="line">You love Linux so much</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># expr $a+$b</span></span><br><span class="line">10+20</span><br><span class="line">[root@localhost ~]<span class="comment"># expr $a + $b</span></span><br><span class="line">30</span><br></pre></td></tr></table></figure>
-
-<h3 id="字符数字相加"><a href="#字符数字相加" class="headerlink" title="字符数字相加"></a>字符数字相加</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># let c=a+b</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $c</span></span><br><span class="line">30</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo c=$[ $a + $b]</span></span><br><span class="line">c=30</span><br></pre></td></tr></table></figure>
-<h1 id="判断条件"><a href="#判断条件" class="headerlink" title="判断条件"></a>判断条件</h1><h2 id="字符串测试"><a href="#字符串测试" class="headerlink" title="字符串测试"></a>字符串测试</h2><ol>
-<li>比较操作符两端有空格.</li>
-<li>字符串或者变量都要加双引号, 防止字符串内有空格</li>
-<li>使用 &gt;&lt;要转义,不然Shell不知道是不是输出重定向.</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">|表达式|操作符|说明|</span><br><span class="line">|---|---|---|</span><br><span class="line">|[ <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span>&quot;</span> = <span class="string">&quot;<span class="variable">$&#123;str2&#125;</span>&quot;</span> ] | [] [[]]| 字符串相同时返回真|</span><br><span class="line">| [ <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span>&quot;</span> != <span class="string">&quot;&#123;str2&#125;&quot;</span> ] | [] [[]]| 字符串不相同时返回真|</span><br><span class="line">| [ -n <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span>&quot;</span> ] | [] [[]] | 长度大于0时, 返回真, 非空|</span><br><span class="line">| [ -z <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span>&quot;</span> ] |[] [[]] | 长度等于0时, 返回真, 空串|</span><br><span class="line">|[ <span class="string">&quot;<span class="variable">$&#123;str1&#125;</span> ]| [] [[]] | 非空为真 |</span></span><br><span class="line"><span class="string">|&gt;, &lt;| [] 比较结果一样返回相同值 | [[]] 根据相应ASCII比较 |</span></span><br><span class="line"><span class="string">|\\&gt;, \\&lt;| [] 根据相应ASCII比较| [[]] 不可以使用</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="整数测试"><a href="#整数测试" class="headerlink" title="整数测试"></a>整数测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1. <span class="built_in">test</span> <span class="string">&quot;<span class="variable">$num1</span>&quot;</span> op num2</span><br><span class="line">2. [ <span class="string">&quot;<span class="variable">$&#123;num1&#125;</span>&quot;</span> op <span class="string">&quot;<span class="variable">$&#123;num2&#125;</span>&quot;</span> ]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">|整数比较运行符 |说明 |</span><br><span class="line">|---|---|</span><br><span class="line">| num1 -eq num2 | 相等为0 |</span><br><span class="line">| num1 -ne num2| 不相等为0 |</span><br><span class="line">| num1 -gt num2| 大于为0 |</span><br><span class="line">| num1 -lt num2| 小于为0 |</span><br><span class="line">| num1 -ge num2| 大于等于为0 |</span><br><span class="line">| num1 -le num2| 小于等于为0 |</span><br><span class="line">| &gt; | 大于, 需要使用双圆括号且要转义, 如((&quot;<span class="variable">$num1</span>&quot; &lt; &quot;<span class="variable">$num2</span>&quot;)) &lt;br&gt;[root@localhost ~]<span class="comment">#  ((1 \&lt; 2)); echo $?&lt;br&gt;0|</span></span><br><span class="line">| &lt; | 小于, 需要使用双圆括号且要转义, 如((&quot;<span class="variable">$num1</span>&quot;&lt;&quot;<span class="variable">$num2</span>&quot;))|</span><br><span class="line">| &gt;= | 大于等于, 需要使用双圆括号且要转义, 如((&quot;<span class="variable">$num1</span>&quot;&gt;=&quot;<span class="variable">$num2</span>&quot;))|</span><br><span class="line">| &lt;=| 小于等于, 需要使用双圆括号且要转义, 如((&quot;<span class="variable">$num1</span>&quot;&lt;=&quot;<span class="variable">$num2</span>&quot;))|</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="文件状态测试"><a href="#文件状态测试" class="headerlink" title="文件状态测试"></a>文件状态测试</h2><table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>-a file</td>
-<td>如果文件存在为真</td>
-</tr>
-<tr>
-<td>-b file</td>
-<td>如果文件是块设备为真</td>
-</tr>
-<tr>
-<td>-c file</td>
-<td>如果文件字符设备为真</td>
-</tr>
-<tr>
-<td>-d file</td>
-<td>如果是目录为真</td>
-</tr>
-<tr>
-<td>-f file</td>
-<td>如果是普能文件为真, 非目录和设备文件</td>
-</tr>
-<tr>
-<td>-g file</td>
-<td>如果文件设置了SGID位为真</td>
-</tr>
-<tr>
-<td>-L file</td>
-<td>如果是符号链接为真</td>
-</tr>
-<tr>
-<td>-u file</td>
-<td>如果文件设置了SUID为真</td>
-</tr>
-<tr>
-<td>-r file</td>
-<td>如果文件可读为真</td>
-</tr>
-<tr>
-<td>-w file</td>
-<td>如果文件可写为真</td>
-</tr>
-<tr>
-<td>-x file</td>
-<td>如果文件可执行为真</td>
-</tr>
-<tr>
-<td>-s file</td>
-<td>如果文件为空为真, 文件大小大于0</td>
-</tr>
-<tr>
-<td>-c file</td>
-<td>如果文件或目录存在为真</td>
-</tr>
-</tbody></table>
-<h2 id="复杂判断逻辑运算符"><a href="#复杂判断逻辑运算符" class="headerlink" title="复杂判断逻辑运算符"></a>复杂判断逻辑运算符</h2><table>
-<thead>
-<tr>
-<th>逻辑运算符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>-a</td>
-<td>逻辑与</td>
-</tr>
-<tr>
-<td>-o</td>
-<td>逻辑或</td>
-</tr>
-<tr>
-<td>!</td>
-<td>逻辑非</td>
-</tr>
-</tbody></table>
-<h2 id="子shell"><a href="#子shell" class="headerlink" title="子shell"></a>子shell</h2><p>(cmd1;cmd2): 子shell<br>{cmd1; cmd2}: 当前shell</p>
-<p>在第一个例子中，使用小括号创建了一个子shell，子shell 中修改的变量 a 不会影响到父shell，因此在最后的 echo $a 中输出的是父shell 中的值，即 6。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># a=6</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ( echo &quot;Hello&quot; ; a=7; echo $a;);echo $a</span></span><br><span class="line">Hello</span><br><span class="line">7</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
-
-
-<p>在第二个例子中，使用大括号块 {} 创建的是当前shell 的命令组合，其中对变量 a 的修改会影响到父shell。因此，在最后的 echo $a 中输出的是被修改过的值，即 7。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># a=6</span></span><br><span class="line">[root@localhost ~]<span class="comment"># &#123; echo &quot;Hello&quot; ; a=7; echo $a;&#125;;echo $a</span></span><br><span class="line">Hello</span><br><span class="line">7</span><br><span class="line">7</span><br></pre></td></tr></table></figure>
-
-<h2 id="Test-let"><a href="#Test-let" class="headerlink" title="Test [] [[]] (()) let"></a>Test [] [[]] (()) let</h2><ul>
-<li>[] 等同test, 用于传统的测试表达式，如字符串比较、整数比较等。</li>
-<li>[] 在进行字符串比较时，通常需要使用 &#x3D; 或者 !&#x3D;，而在 [[ … ]] 中可以使用 &#x3D;&#x3D; 或者 !&#x3D;。</li>
-<li>[[ … ]] 更灵活，可以进行正则表达式匹配，如 [[ “$var” &#x3D;~ pattern ]]。</li>
-<li>[[ … ]] 中的变量不需要引号引起来，而在 [] 中最好使用引号。</li>
-<li>(())用于算术操作，可以进行整数比较和赋值等</li>
-<li>let用于执行算术操作和赋值。</li>
-</ul>
-<h3 id="反引号-："><a href="#反引号-：" class="headerlink" title="反引号 &#96;&#96;："></a>反引号 &#96;&#96;：</h3><p>result&#x3D;<code>command</code><br>或者</p>
-<p>result&#x3D;$(command)<br>这两种语法是等效的，它们都会执行 command 并将其输出赋值给变量 result。这种方式在较旧版本的shell中较为常见。</p>
-<h3 id="："><a href="#：" class="headerlink" title="$()："></a>$()：</h3><p>result&#x3D;$(command)<br>这是一种更现代、推荐使用的命令替换方式，与反引号 &#96;&#96; 功能相同。这个语法更灵活，并且可以嵌套使用，而且在可读性上更好。</p>
-<h3 id="eval："><a href="#eval：" class="headerlink" title="eval："></a>eval：</h3><p>eval result&#x3D;$(command)<br>eval 用于执行字符串中的命令。它会将参数合并成一个字符串，并将其作为 shell 命令执行。eval 可以用于动态地构建和执行命令，但也容易引入安全性问题，因为它会执行任意的 shell 代码。</p>
-<p>总的来说，推荐使用 $() 进行命令替换，因为它更灵活、可读性更好，并且在大多数情况下更安全。 eval 的使用应当谨慎，因为它可能导致意外的副作用和安全风险。</p>
-<h3 id="字符子串Index"><a href="#字符子串Index" class="headerlink" title="字符子串Index"></a>字符子串Index</h3><p>[root@localhost ~]# expr index ${str} ‘a’<br>2</p>
-<p>[root@localhost ~]# echo $str |awk -F “” ‘{print $1, $NF}’<br>h i</p>
-<p>[root@localhost ~]# echo “This is a test” |awk ‘{printf(“%d\n”, match($0, “test”))}’<br>11</p>
-<h3 id="双引号-单引号-VAR-单引号-双引号"><a href="#双引号-单引号-VAR-单引号-双引号" class="headerlink" title="双引号 + 单引号 + VAR +  单引号 + 双引号"></a>双引号 + 单引号 + VAR +  单引号 + 双引号</h3><p>[root@localhost ~]# awk ‘BEGIN{print “‘$a’”}’<br>aaa</p>
-<h3 id="双引号-单引号-双引号-VAR-双引号-单引号-双引号-如果变量中有空格，防止将空格作为分隔符"><a href="#双引号-单引号-双引号-VAR-双引号-单引号-双引号-如果变量中有空格，防止将空格作为分隔符" class="headerlink" title="双引号 + 单引号 + 双引号 + VAR +  双引号 + 单引号 + 双引号, 如果变量中有空格，防止将空格作为分隔符"></a>双引号 + 单引号 + 双引号 + VAR +  双引号 + 单引号 + 双引号, 如果变量中有空格，防止将空格作为分隔符</h3><p>[root@localhost ~]# awk ‘BEGIN{print “‘“$a”‘“}’<br>aaa</p>
-<h3 id="AWK向Shell传递变量"><a href="#AWK向Shell传递变量" class="headerlink" title="AWK向Shell传递变量"></a>AWK向Shell传递变量</h3><p>[root@localhost ~]# eval $(awk ‘BEGIN{print “var1&#x3D;’str1’”}’)<br>[root@localhost ~]# echo $var1<br>str1</p>
-<h3 id="输出OFS"><a href="#输出OFS" class="headerlink" title="输出OFS"></a>输出OFS</h3><p>[root@localhost ~]# awk -F: ‘{if ($1&#x3D;&#x3D;”root”) print $1,$3}’ OFS&#x3D;’&amp;&amp;&amp;’  &#x2F;etc&#x2F;passwd<br>root&amp;&amp;&amp;0</p>
-<p>Print all: print 或 print $0<br>[root@localhost ~]# awk -F: ‘{if ($1&#x3D;&#x3D;”root”) print}’ &#x2F;etc&#x2F;passwd<br>root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</p>
-<h3 id="自定义标题"><a href="#自定义标题" class="headerlink" title="自定义标题"></a>自定义标题</h3><p>[root@localhost ~]# awk ‘BEGIN{OFS&#x3D;”\t”; print “UserName”,”Privilegs”} {print $1, $3} END{print “All users”}’ FS&#x3D;”:” &#x2F;etc&#x2F;passwd<br>UserName        Privilegs<br>root    0<br>bin     1<br>daemon  2<br>adm     3<br>tcpdump 72<br>All users</p>
-<h3 id="自定义标题格式左对齐"><a href="#自定义标题格式左对齐" class="headerlink" title="自定义标题格式左对齐"></a>自定义标题格式左对齐</h3><p>[root@localhost ~]# awk ‘BEGIN{OFS&#x3D;”\t”; printf “%-20s%s\n”, “UserName”, “Privileges”} {printf “%-20s%s\n”, $1, $3} END{print “All users”}’ FS&#x3D;”:” &#x2F;etc&#x2F;passwd<br>UserName            Privileges<br>root                0<br>bin                 1<br>daemon              2<br>adm                 3<br>lp                  4<br>sync                5<br>shutdown            6<br>tcpdump             72<br>All users<br>[root@localhost ~]# awk ‘BEGIN{OFS&#x3D;”\t”; printf “%-20s%-20s\n”, “UserName”, “Privileges”} {printf “%-20s%-20s\n”, $1, $3} END{print “All users”}’ FS&#x3D;”:” &#x2F;etc&#x2F;passwd<br>UserName            Privileges<br>root                0<br>bin                 1<br>daemon              2<br>adm                 3<br>lp                  4</p>
-<h3 id="右对齐"><a href="#右对齐" class="headerlink" title="右对齐"></a>右对齐</h3><p>[root@localhost ~]# awk ‘BEGIN{OFS&#x3D;”\t”; printf “%+20s%+20s\n”, “UserName”, “Privileges”} {printf “%+20s%+20s\n”, $1, $3} END{print “All users”}’ FS&#x3D;”:” &#x2F;etc&#x2F;passwd<br>            UserName          Privileges<br>                root                   0<br>                 bin                   1<br>              daemon                   2<br>                 adm                   3<br>                  lp                   4<br>                sync                   5</p>
-<h3 id="多分隔符使用-F’-’"><a href="#多分隔符使用-F’-’" class="headerlink" title="多分隔符使用 -F’[]’"></a>多分隔符使用 -F’[]’</h3><p>[root@localhost ~]# cat c.txt<br>aa_bb:cc_dd:ee_ff<br>hh_ii:jj_kk:ll_mm<br>[root@localhost ~]# awk -F’[: _]’ ‘{print $1, $6}’ c.txt<br>aa ff<br>hh mm</p>
-<h3 id="使用-F’-’-解决连续分隔符"><a href="#使用-F’-’-解决连续分隔符" class="headerlink" title="使用 -F’[]’+ 解决连续分隔符"></a>使用 -F’[]’+ 解决连续分隔符</h3><p>[root@localhost ~]# cat c.txt<br>aa__bb:::cc__dd:::::ee__ff<br>hh__ii:::jj__kk:::::ll__mm<br>[root@localhost ~]# awk -F’[: _]+’ ‘{print $1, $6}’ c.txt<br>aa ff<br>hh mm</p>
-<p>[root@localhost ~]# awk ‘BEGIN{a&#x3D;”aaa”; print a++, ++a}’<br>0 2<br>这是因为在 awk 中，字符串和数字之间的操作会进行自动的类型转换。在这个例子中，a 被初始化为字符串 “aaa”，然后在 print 语句中使用了自增运算符 ++，这导致 awk 将字符串 “aaa” 转换为数字。字符串 “aaa” 被解释为数字 0，因为它以一个非数字字符开头。</p>
-<p>所以，a++ 中的 ++ 会使 a 的值变为 0，而 ++a 会使 a 的值变为 1。因此，结果是 “0 2”。</p>
-<p>如果你想要避免这种自动转换，你可以将 a 明确初始化为数字，例如：awk ‘BEGIN{a&#x3D;0; print a++, ++a}’</p>
-<h3 id="模式匹配-awk-pattern-actioins"><a href="#模式匹配-awk-pattern-actioins" class="headerlink" title="模式匹配 awk pattern { actioins }"></a>模式匹配 awk pattern { actioins }</h3><p>[root@localhost ~]# awk -F: ‘&#x2F;^(r..t|adm)&#x2F;{print $1}’ &#x2F;etc&#x2F;passwd<br>root<br>adm</p>
-<p>[root@localhost ~]# awk -F: ‘$3&gt;990  {print $1}’ &#x2F;etc&#x2F;passwd<br>polkitd<br>libstoragemgmt<br>unbound<br>gluster<br>nfsnobody<br>pcp<br>chrony</p>
-<p>[root@localhost ~]# awk -F: ‘{IGNORECASE&#x3D;1; if($1 ~&#x2F;^[a-z]&#x2F; &amp;&amp;  $NF ~&#x2F;bash$&#x2F;) {print $0}}’ &#x2F;etc&#x2F;passwd<br>root:x:0:0:root:&#x2F;root:&#x2F;bin&#x2F;bash</p>
-<p>[root@localhost ~]# awk -F: ‘{ if (!($1 ~&#x2F;^[a-z]&#x2F; &amp;&amp; $NF ~&#x2F;bash$&#x2F;)) {print} }’ &#x2F;etc&#x2F;passwd<br>bin:x:1:1:bin:&#x2F;bin:&#x2F;sbin&#x2F;nologin<br>daemon:x:2:2:daemon:&#x2F;sbin:&#x2F;sbin&#x2F;nologin<br>adm:x:3:4:adm:&#x2F;var&#x2F;adm:&#x2F;sbin&#x2F;nologin</p>
-<p>[root@localhost ~]# awk -F: ‘$3&gt;990 &amp;&amp; $4&#x3D;995  {print}’ &#x2F;etc&#x2F;passwd<br>polkitd x 999 995 User for polkitd &#x2F; &#x2F;sbin&#x2F;nologin<br>libstoragemgmt x 998 995 daemon account for libstoragemgmt &#x2F;var&#x2F;run&#x2F;lsm &#x2F;sbin&#x2F;nologin<br>unbound x 997 995 Unbound DNS resolver &#x2F;etc&#x2F;unbound &#x2F;sbin&#x2F;nologin<br>gluster x 996 995 GlusterFS daemons &#x2F;run&#x2F;gluster &#x2F;sbin&#x2F;nologin<br>nfsnobody x 65534 995 Anonymous NFS User &#x2F;var&#x2F;lib&#x2F;nfs &#x2F;sbin&#x2F;nologin<br>pcp x 995 995 Performance Co-Pilot &#x2F;var&#x2F;lib&#x2F;pcp &#x2F;sbin&#x2F;nologin<br>chrony x 994 995  &#x2F;var&#x2F;lib&#x2F;chrony &#x2F;sbin&#x2F;nologin</p>
-<h3 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h3><p>[root@localhost ~]#  awk -v name&#x3D;aaa ‘BEGIN{printf “my name is %-20s\n”, name}’<br>my name is aaa<br>[root@localhost ~]#  awk -v name&#x3D;aaa ‘BEGIN{printf “my name is %+20s\n”, name}’<br>my name is                  aaa</p>
-<p>For each<br>[root@localhost ~]# awk -F: ‘{a[NR]&#x3D;$1} END{for (item in a) print a[item]}’ &#x2F;etc&#x2F;passwd<br>mysql<br>libstoragemgmt<br>adm<br>pcp<br>rpc<br>lp<br>sshd</p>
-<p>For loop<br>[root@localhost ~]# awk -F: ‘{a[NR]&#x3D;$1} END{for (i&#x3D;1; i&lt;&#x3D;NR; i++) print a[i]}’ &#x2F;etc&#x2F;passwd<br>root<br>bin<br>daemon<br>adm<br>lp</p>
-<h3 id="内置变量与Export变量"><a href="#内置变量与Export变量" class="headerlink" title="内置变量与Export变量"></a>内置变量与Export变量</h3><p>[root@localhost ~]# export a&#x3D;aaa<br>[root@localhost ~]# awk ‘BEGIN{for (i in ENVIRON) {print i”&#x3D;”ENVIRON[i]}}’<br>AWKPATH&#x3D;.:&#x2F;usr&#x2F;share&#x2F;awk<br>SELINUX_LEVEL_REQUESTED&#x3D;<br>SELINUX_ROLE_REQUESTED&#x3D;<br>LANG&#x3D;en_US.UTF-8<br>HISTSIZE&#x3D;1000<br>XDG_RUNTIME_DIR&#x3D;&#x2F;run&#x2F;user&#x2F;0<br>USER&#x3D;root<br>_&#x3D;&#x2F;usr&#x2F;bin&#x2F;awk<br>SELINUX_USE_CURRENT_RANGE&#x3D;<br>TERM&#x3D;xterm<br>SHELL&#x3D;&#x2F;bin&#x2F;bash<br>a&#x3D;aaa</p>
-<h3 id="AWK的运行时间"><a href="#AWK的运行时间" class="headerlink" title="AWK的运行时间"></a>AWK的运行时间</h3><p>[root@localhost ~]# time(awk ‘BEGIN{total&#x3D;0; for (i&#x3D;0;i&lt;&#x3D;10000;i++) {total+&#x3D;i;} print total;}’)<br>50005000</p>
-<p>real    0m0.003s<br>user    0m0.000s<br>sys     0m0.003s</p>
-<p>[root@localhost ~]# time(total&#x3D;0;for i in $(seq 10000);do total&#x3D;$(($total + i ));done; echo $total;)<br>50005000</p>
-<p>real    0m0.071s<br>user    0m0.065s<br>sys     0m0.005s</p>
-<h3 id="变量相加"><a href="#变量相加" class="headerlink" title="变量相加"></a>变量相加</h3><p>[root@localhost ~]# awk ‘BEGIN{a&#x3D;10;b&#x3D;20;c&#x3D;(a+b);print c}’<br>30</p>
-<h3 id="字符连接"><a href="#字符连接" class="headerlink" title="字符连接"></a>字符连接</h3><p>[root@localhost ~]# awk ‘BEGIN{a&#x3D;10;b&#x3D;20;c&#x3D;(a””b);print c}’<br>1020</p>
-<h3 id="统计并排序"><a href="#统计并排序" class="headerlink" title="统计并排序"></a>统计并排序</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> 方法一<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># awk &#x27;&#123;a[$1]++&#125; END&#123; for ( b in a ) print a[b], b&#125;&#x27; a.txt|sort -rn</span></span><br><span class="line">3 ccc</span><br><span class="line">2 aaa</span><br><span class="line">1 bbb</span><br></pre></td></tr></table></figure></li>
-<li><input checked="" disabled="" type="checkbox"> 方法二<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># sort a.txt |uniq -c |sort -rn</span></span><br><span class="line">      3 ccc</span><br><span class="line">      2 aaa</span><br><span class="line">      1 bbb</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="grep-空行"><a href="#grep-空行" class="headerlink" title="grep 空行"></a>grep 空行</h3><p>[root@localhost ~]# grep “^$” *</p>
-<h3 id="rep-空行和注释行"><a href="#rep-空行和注释行" class="headerlink" title="rep 空行和注释行"></a>rep 空行和注释行</h3><p>[root@localhost ~]# grep -E “^$|#” *</p>
-<h2 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h2><p>[root@localhost ~]# sed ‘s&#x2F;ccc&#x2F;eee&#x2F;‘ a.txt<br>aaa<br>bbb<br>eee ccc<br>aaa<br>eee ccc<br>eee ccc</p>
-<p>[root@localhost ~]# sed ‘s&#x2F;ccc&#x2F;eee&#x2F;g’ a.txt<br>aaa<br>bbb<br>eee eee<br>aaa<br>eee eee<br>eee eee</p>
-<p>[root@localhost ~]# sed -i ‘s&#x2F;ccc&#x2F;eee&#x2F;g’ a.txt<br>[root@localhost ~]# cat a.txt<br>aaa<br>bbb<br>eee eee<br>aaa<br>eee eee<br>eee eee</p>
-<h3 id="插入到行前"><a href="#插入到行前" class="headerlink" title="插入到行前"></a>插入到行前</h3><p>[root@localhost ~]#  sed -e ‘&#x2F;bbb&#x2F;i\fff’ a.txt<br>aaa<br>fff<br>bbb<br>eee eee<br>aaa<br>eee eee<br>eee eee</p>
-<h3 id="插入到行后"><a href="#插入到行后" class="headerlink" title="插入到行后"></a>插入到行后</h3><p>[root@localhost ~]#  sed -e ‘&#x2F;bbb&#x2F;a\fff’ a.txt<br>aaa<br>bbb<br>fff<br>eee eee<br>aaa<br>eee eee<br>eee eee</p>
-<h3 id="删除第2行，-最后一行"><a href="#删除第2行，-最后一行" class="headerlink" title="删除第2行， 最后一行"></a>删除第2行， 最后一行</h3><p>[root@localhost ~]# sed ‘2d;$d’ a.txt<br>aaa<br>fff<br>eee eee<br>aaa<br>eee eee</p>
-<h3 id="删除第2到最后一行"><a href="#删除第2到最后一行" class="headerlink" title="删除第2到最后一行"></a>删除第2到最后一行</h3><p>[root@localhost ~]# sed ‘2,$d’ a.txt<br>aaa</p>
-<h3 id="删除奇数行"><a href="#删除奇数行" class="headerlink" title="删除奇数行"></a>删除奇数行</h3><p>[root@localhost <del>]# sed ‘1</del>2d’ a.txt<br>bbb<br>eee eee<br>eee eee</p>
-<h3 id="行前行后-增加"><a href="#行前行后-增加" class="headerlink" title="行前行后 增加"></a>行前行后 增加</h3><p>[root@localhost ~]# sed ‘3a hhh’ a.txt<br>aaa<br>bbb<br>fff<br>hhh<br>eee eee<br>aaa<br>eee eee<br>eee eee<br>[root@localhost ~]# sed ‘3i hhh’ a.txt<br>aaa<br>bbb<br>hhh<br>fff<br>eee eee<br>aaa<br>eee eee<br>eee eee</p>
-<h2 id="dd"><a href="#dd" class="headerlink" title="dd"></a>dd</h2><blockquote>
-<p>dd if&#x3D;&#x2F;dev&#x2F;zero of&#x3D;.&#x2F;test.txt bs&#x3D;1M count&#x3D;10</p>
-</blockquote>
-<h2 id="find-and-execute-command"><a href="#find-and-execute-command" class="headerlink" title="find and execute command"></a>find and execute command</h2><p> [root@localhost ~]# find a.txt -exec ls -l {} ;<br>-rw-r–r–. 1 root root 40 Jan  7 08:54 a.txt</p>
-<p>[root@localhost ~]# find a* -type f -exec ls -l {} ;<br>-rw——-. 1 root root 1861 Nov 15 09:04 anaconda-ks.cfg<br>-rw-r–r–. 1 root root 35 Dec 11 10:37 a.sh<br>-rw-r–r–. 1 root root 40 Jan  7 08:54 a.txt</p>
-<h3 id="if-statement"><a href="#if-statement" class="headerlink" title="if statement"></a>if statement</h3><p>if [ condition1 ]<br>then<br>    statements<br>elif [ condition2 ]<br>then<br>    statements<br>else<br>    statements<br>fi</p>
-<h3 id="case-statement"><a href="#case-statement" class="headerlink" title="case statement"></a>case statement</h3><p>case $1 in<br>  value1)<br>    statements<br>    break<br>;;<br>  value2)<br>    statements<br>    break<br>;;<br>  *)<br>    statements<br>;;<br>esac</p>
-<h3 id="for-statement"><a href="#for-statement" class="headerlink" title="for statement"></a>for statement</h3><p>for arg in “$@”<br>do<br>    echo $arg<br>done</p>
-<p>for arg<br>do<br>    echo $arg<br>done</p>
-<p>for file in $(ls)<br>for num in 1 2 3 4 5<br>for ((i&#x3D;1; i&lt;&#x3D;5; i++))<br>for var in {1..5}<br>for var in {1..100..2}<br>do<br> statements<br>done</p>
-<h3 id="while-条件为真-条件退出状态为0"><a href="#while-条件为真-条件退出状态为0" class="headerlink" title="while 条件为真, 条件退出状态为0"></a>while 条件为真, 条件退出状态为0</h3><p>i&#x3D;1<br>while ((i &lt;&#x3D; 6 ))<br>do<br>    echo $i<br>    let “i++”<br>done</p>
-<h3 id="until-条件为假时执行循环"><a href="#until-条件为假时执行循环" class="headerlink" title="until 条件为假时执行循环"></a>until 条件为假时执行循环</h3><p>until who |grep “root” &amp;&gt; &#x2F;dev&#x2F;null<br>do<br> echo “$(date) root not login”<br> sleep 3<br>done</p>
-<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># select color in &quot;red&quot; &quot;blue&quot; &quot;green&quot;</span></span><br><span class="line">&gt; <span class="keyword">do</span></span><br><span class="line">&gt; <span class="built_in">break</span></span><br><span class="line">&gt; <span class="keyword">done</span></span><br><span class="line">1) red</span><br><span class="line">2) blue</span><br><span class="line">3) green</span><br><span class="line"><span class="comment">#? 2</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $color</span></span><br><span class="line">blue</span><br></pre></td></tr></table></figure>
-
-<p>不带参数, 直接从命令行取$* 或$@</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bash a.sh red bule green</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Please select you color:&quot;</span></span><br><span class="line"><span class="keyword">select</span> color</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">break</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;You color is <span class="variable">$color</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="定义数组"><a href="#定义数组" class="headerlink" title="定义数组"></a>定义数组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># arr1=(&quot;a&quot; &quot;b&quot; &quot;c&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr1[0]&#125;</span></span><br><span class="line">a</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr1[1]&#125;</span></span><br><span class="line">b</span><br></pre></td></tr></table></figure>
-
-<h4 id="declare"><a href="#declare" class="headerlink" title="declare"></a>declare</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># declare -a arr2</span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr2[1]=&quot;aa&quot;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr2[2]=&quot;bb&quot;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr2&#125;</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr2[@]&#125;</span></span><br><span class="line">aa bb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="指定键值"><a href="#指定键值" class="headerlink" title="指定键值"></a>指定键值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># arr3=([0]=&quot;aaa&quot; [2]=&quot;bbb&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3[2]&#125;</span></span><br><span class="line">bbb</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3[1]&#125;</span></span><br></pre></td></tr></table></figure>
-<h4 id="关联数组"><a href="#关联数组" class="headerlink" title="关联数组"></a>关联数组</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">arr4=([age]=18 [sex]=<span class="string">&quot;girl&quot;</span> [class]=<span class="string">&quot;2008&quot;</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr4[age]&#125;</span>    <span class="comment"># Should output: 18</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr4[class]&#125;</span>  <span class="comment"># Should output: 2008</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;arr4[sex]&#125;</span>    <span class="comment"># Should output: girl</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="数组长度"><a href="#数组长度" class="headerlink" title="数组长度"></a>数组长度</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示全部元素</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3[@]&#125;</span></span><br><span class="line">aaa bbb</span><br><span class="line"><span class="comment">#数组名代名第一个元素</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3&#125;</span></span><br><span class="line">aaa</span><br><span class="line"><span class="comment">#全部元素个数</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;#arr3[@]&#125;</span></span><br><span class="line">2</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;#arr3[*]&#125;</span></span><br><span class="line">2</span><br><span class="line"><span class="comment">#某个元素的长度</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;#arr3[2]&#125;</span></span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-<h3 id="数组遍历"><a href="#数组遍历" class="headerlink" title="数组遍历"></a>数组遍历</h3><p>for i in “${array[@]}”</p>
-<h3 id="数组切片"><a href="#数组切片" class="headerlink" title="数组切片"></a>数组切片</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#元素从0开始, </span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr3=([0]=&quot;aaa&quot; [1]=&quot;bbb&quot; [2]=&quot;ccc&quot; [3]=&quot;ddd&quot; [4]=&quot;eee&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]:1:1&#125;&quot;</span></span><br><span class="line">bbb</span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]:1:2&#125;&quot;</span></span><br><span class="line">bbb ccc</span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]:2:4&#125;&quot;</span></span><br><span class="line">ccc ddd eee</span><br></pre></td></tr></table></figure>
-<h3 id="数组替换-复制-删除"><a href="#数组替换-复制-删除" class="headerlink" title="数组替换, 复制, 删除"></a>数组替换, 复制, 删除</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># arr3=([0]=&quot;aaa&quot; [1]=&quot;bbb&quot; [2]=&quot;ccc&quot; [3]=&quot;ddd&quot; [4]=&quot;eee&quot;)</span></span><br><span class="line"><span class="comment">#元素替换</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]/ccc/hhh&#125;&quot;</span></span><br><span class="line">aaa bbb hhh ddd eee</span><br><span class="line"></span><br><span class="line"><span class="comment">#删除数组, unset 不能用$array, 这样没有效果, 如下</span></span><br><span class="line">[root@localhost ~]<span class="comment"># unset $&#123;arr3[2]&#125;</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]&#125;&quot;</span></span><br><span class="line">aaa bbb ccc ddd eee</span><br><span class="line">[root@localhost ~]<span class="comment"># unset $arr3</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]&#125;&quot;</span></span><br><span class="line">aaa bbb ccc ddd eee</span><br><span class="line"><span class="comment">#删除一个元素</span></span><br><span class="line">[root@localhost ~]<span class="comment"># unset arr3[2]</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo &quot;$&#123;arr3[@]&#125;&quot;</span></span><br><span class="line">aaa bbb ddd ee</span><br><span class="line"><span class="comment">#删除全部</span></span><br><span class="line">[root@localhost ~]<span class="comment"># unset arr3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#复制数组</span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr3=([0]=&quot;aaa&quot; [1]=&quot;bbb&quot; [2]=&quot;ccc&quot; [3]=&quot;ddd&quot; [4]=&quot;eee&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># arr4=(&quot;$&#123;arr3[@]&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr4[@]&#125;</span></span><br><span class="line">aaa bbb ccc ddd eee</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># unset arr4[2]</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr4[@]&#125;</span></span><br><span class="line">aaa bbb ddd eee</span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;arr3[@]&#125;</span></span><br><span class="line">aaa bbb ccc ddd eee</span><br><span class="line"></span><br><span class="line"><span class="comment">#连接数组</span></span><br><span class="line">[root@localhost ~]<span class="comment"># c=(&quot;$&#123;arr3[@]&#125;&quot; &quot;$&#123;arr4[@]&#125;&quot;)</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo $&#123;c[@]&#125;</span></span><br><span class="line">aaa bbb ccc ddd eee aaa bbb ddd eee</span><br><span class="line"></span><br><span class="line"><span class="comment">#将文本内容加载到数组</span></span><br><span class="line">[root@localhost ~]<span class="comment"># cat &gt;aaaa.txt &lt;&lt;name</span></span><br><span class="line">aaa</span><br><span class="line">bb</span><br><span class="line">cc</span><br><span class="line"><span class="built_in">dd</span></span><br><span class="line">eee</span><br><span class="line">name</span><br><span class="line"></span><br><span class="line">items=$(<span class="built_in">cat</span> aaaa.txt)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$&#123;items[@]&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"> <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;i&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><ol>
-<li>函数名和 { 之间必须有空格</li>
-<li>不得声明形式参数</li>
-<li>必须在调用前声明</li>
-<li>无法重载</li>
-<li>后面的声明会覆盖之前的</li>
-<li>return 0-255</li>
-<li>$# 参数个数, 没有是0</li>
-<li>$@,$* 所有参数</li>
-<li>$0 函数名</li>
-<li>$1开始, 具体参数值</li>
-<li>函数内部变量与全局变量重名, 使用local关键字</li>
-<li>可以定义函数在~&#x2F;.bash_profile 或 ~&#x2F;.bashrc,不用时可以unset, 使用时当作命令用</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">test</span></span>() </span><br><span class="line">&#123;</span><br><span class="line">    a=<span class="string">&quot;hello world! <span class="variable">$1</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;a=<span class="variable">$&#123;a&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">res=$(<span class="built_in">test</span> <span class="string">&quot;nihao&quot;</span>)</span><br><span class="line"></span><br><span class="line">the result is a=hello world! nihao</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># tail -5 .bashrc</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">hi</span></span>()</span><br><span class="line">&#123;</span><br><span class="line"> <span class="built_in">echo</span> <span class="string">&quot;Hello world!&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">[root@localhost ~]<span class="comment"># . .bashrc</span></span><br><span class="line">[root@localhost ~]<span class="comment"># hi</span></span><br><span class="line">Hello world!</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2024/02/21/Linux-shell-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" data-id="cltr83b4d0001g1o60s1k9mxf" data-title="Linux-shell-学习笔记" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -1804,7 +1118,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91-Jenkins/" rel="tag">坑 Jenkins</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python-Java/" rel="tag">Python Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91-Jenkins/" rel="tag">坑 Jenkins</a></li></ul>
     </div>
   </div>
 
@@ -1814,7 +1128,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a> <a href="/tags/%E5%9D%91-Jenkins/" style="font-size: 10px;">坑 Jenkins</a>
+      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Python-Java/" style="font-size: 10px;">Python Java</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a> <a href="/tags/%E5%9D%91-Jenkins/" style="font-size: 10px;">坑 Jenkins</a>
     </div>
   </div>
 
@@ -1836,6 +1150,10 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
       <ul>
         
           <li>
+            <a href="/2024/11/17/%E8%A7%A3%E5%8E%8B%E8%A7%A3%E6%9E%90websocket%E7%9A%84bytes%E6%95%B0%E6%8D%AE/">解压解析websocket的bytes数据</a>
+          </li>
+        
+          <li>
             <a href="/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/">Jenkins 设置Git凭据的问题</a>
           </li>
         
@@ -1849,10 +1167,6 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
         
           <li>
             <a href="/2024/03/23/20240323-k8s-notes-md/">k8s 学习笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2024/03/19/20240319-hexo-disply-image-md/">解决Hexo 显示图片的问题</a>
           </li>
         
       </ul>
