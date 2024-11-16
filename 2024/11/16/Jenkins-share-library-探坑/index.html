@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Jenkins share library 探坑 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="因一个自动化测试项目, 运行在docker container中, Jenkins pipeline需要获取测试用例的运行结果, 来决定本次运行的最终结果. 一开始比较想当然的使用share library, 读取自动生成的Junit格式的xml, 然后使用Groovy内置的XmlParser来解析, 并分析得到是否有失败, 跳过的测试用例, 确认本次的运行结果 代码如下 123456789101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins share library 探坑">
+<meta property="og:url" content="http://example.com/2024/11/16/Jenkins-share-library-%E6%8E%A2%E5%9D%91/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="因一个自动化测试项目, 运行在docker container中, Jenkins pipeline需要获取测试用例的运行结果, 来决定本次运行的最终结果. 一开始比较想当然的使用share library, 读取自动生成的Junit格式的xml, 然后使用Groovy内置的XmlParser来解析, 并分析得到是否有失败, 跳过的测试用例, 确认本次的运行结果 代码如下 123456789101">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-16T15:52:52.000Z">
+<meta property="article:modified_time" content="2024-11-16T15:54:29.281Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Jenkins-share-library-探坑" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/16/Jenkins-share-library-%E6%8E%A2%E5%9D%91/" class="article-date">
+  <time class="dt-published" datetime="2024-11-16T15:52:52.000Z" itemprop="datePublished">2024-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Jenkins share library 探坑
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>因一个自动化测试项目, 运行在docker container中, Jenkins pipeline需要获取测试用例的运行结果, 来决定本次运行的最终结果.</p>
+<p>一开始比较想当然的使用share library, 读取自动生成的Junit格式的xml, 然后使用Groovy内置的XmlParser来解析, 并分析得到是否有失败, 跳过的测试用例, 确认本次的运行结果</p>
+<p>代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">src\</span><br><span class="line"></span><br><span class="line">class JunitReport</span><br><span class="line">   def xmlFile</span><br><span class="line">   </span><br><span class="line">   def read()&#123;</span><br><span class="line">        def xmlContents =  new File(this.xmlFile).text</span><br><span class="line">        def xml = new XmlSlurper().parseText(xmlContents)</span><br><span class="line">        //def xml = new XmlParser().parseText(xmlContents)</span><br><span class="line">      </span><br><span class="line">        def totalTests = 0</span><br><span class="line">        def totalErrors = 0</span><br><span class="line">        def totalFailures = 0</span><br><span class="line">        def totalSkipped = 0</span><br><span class="line"></span><br><span class="line">        xml.testsuite.each &#123; suite -&gt;</span><br><span class="line">            totalTests =+ suite.@tests.toInteger()</span><br><span class="line">            totalErrors += suite.@errors.toInteger()</span><br><span class="line">            totalFailures += suite.@failures.toInteger()</span><br><span class="line">            totalSkipped += suite.@skipped.toInteger()</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return [</span><br><span class="line">                &#x27;test&#x27;: totalTests,</span><br><span class="line">                &#x27;error&#x27;: totalErrors,</span><br><span class="line">                &#x27;fail&#x27;: totalFailures,</span><br><span class="line">                &#x27;skip&#x27;: totalSkipped</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">vars\</span><br><span class="line"></span><br><span class="line">def call(xmlFile)&#123;</span><br><span class="line">    def junit = new JunitReport(xmlFile:xmlFiles)</span><br><span class="line">    def report = junit.read()</span><br><span class="line">    if (report.error &gt; 0 ||  report.skip &gt; 0 || report.fail &gt; 0)&#123;</span><br><span class="line">        return  false</span><br><span class="line">    &#125; else&#123;</span><br><span class="line">        return  true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>Jenkins 提示找不到XmlSlurper或XmlParser,  当时没有明白share library的Groovy的具体版本, 所以也就没有搞清楚4.X内置的库为什么找不到, 加上@Grab(“org.apache.groovy:groovy-xml:4.0.21”), 本错误可以解决, 但新的错误是找不到xml文件, 加了一打印信息, 明明文件是有的, 但就是找不到, 最后在share library里面加上下面的代码, 才发现Share library是运行是Master Node上的, 所以肯定找不到放在Slave agent上的数据文件.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">    def read()&#123;</span><br><span class="line">        def resource = this.getClass().getResource(&#x27;/&#x27;)</span><br><span class="line">        def absolutePath = new File(resource.toURI()).getAbsolutePath()</span><br><span class="line">        def fullPath = new File(absolutePath, this.xmlFile).getAbsolutePath()</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">+ pwd</span><br><span class="line">/home/jenkins_home/workspace/task3</span><br><span class="line">[Pipeline] sh</span><br><span class="line">+ ls -l /home/jenkins_home/workspace/task3/report/junit.xml</span><br><span class="line">-rw-r--r--. 1 root root 7199 Jun 24 17:39 /home/jenkins_home/workspace/task3/report/junit.xml</span><br><span class="line"></span><br><span class="line">java.io.FileNotFoundException: /var/jenkins_home/war/WEB-INF/classes/report/junit.xml (No such file or directory)</span><br></pre></td></tr></table></figure>
+
+<p>使用内置的Steps, readFile读取Slave上的文件, 然后会传递给share lib中的类处理, 但新的问题来了, 提示缺失了某个方法, 改动和错误如下 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class JunitReport &#123;</span><br><span class="line">    String xmlContents</span><br><span class="line">    </span><br><span class="line">    def read()&#123;</span><br><span class="line">        //def xml = new XmlSlurper().parseText(xmlContents)</span><br><span class="line">        def xml = new XmlParser().parseText(xmlContents)</span><br><span class="line">        </span><br><span class="line">                </span><br><span class="line">//Jenkins pipeline stage                </span><br><span class="line">             script&#123;</span><br><span class="line">                        def xmlContents = readFile &#x27;report/junit.xml&#x27;</span><br><span class="line">                        def result = jReport(xmlContents)</span><br><span class="line">                        if (result) &#123;</span><br><span class="line">                            currentBuild.result = &#x27;SUCCESS&#x27;</span><br><span class="line">                        &#125; else &#123;</span><br><span class="line">                            currentBuild.result = &#x27;FAILURE&#x27;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">Also:   org.jenkinsci.plugins.workflow.actions.ErrorAction$ErrorId: 20a2766a-af44-4a79-b059-ef52fe62307f</span><br><span class="line">java.lang.NoSuchMethodError: &#x27;void groovy.xml.XmlUtil.setFeatureQuietly(javax.xml.parsers.SAXParserFactory, java.lang.String, boolean)&#x27;</span><br><span class="line">	at groovy.xml.XmlParser.&lt;init&gt;(XmlParser.java:120)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>在share lib中打了一行打印版本的信息, 得到的结果是2.4.21</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new Logger().info(&quot;Groovy version: $&#123;GroovySystem.version&#125;&quot;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>想改变Groovy的版本, 分别使用了内置的tool和docker image运行, 都不行, share lib的版本始终是2.x版本</p>
+<pre><code>tools &#123;
+    groovy &#39;groovy&#39;
+&#125;
+
+      stage(&#39;Prepare&#39;)&#123;
+            steps&#123;
+
+                sh &#39;env&#39;
+                sh &#39;pwd&#39;
+                sh &#39;ls -l /home/jenkins_home/workspace/task3/report/junit.xml&#39;
+                //sh &#39;rm -rf *&#39;
+                //sh &#39;ls -l&#39;
+                sh &#39;groovy --version&#39;
+                script&#123;
+                    docker.image(&#39;groovy:4.0.20-jdk17&#39;).inside(&#39;-v $&#123;WORKSPACE&#125;:/share&#39;) &#123;
+                        sh &#39;groovy --version&#39;
+                        def xmlContents = readFile &#39;report/junit.xml&#39;
+                        def result = jReport(xmlContents)
+                        if (result) &#123;
+                            currentBuild.result = &#39;SUCCESS&#39;
+                        &#125; else &#123;
+                            currentBuild.result = &#39;FAILURE&#39;
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+
++ pwd
+/home/jenkins_home/workspace/task3
+[Pipeline] sh
++ ls -l /home/jenkins_home/workspace/task3/report/junit.xml
+-rw-r--r--. 1 root root 7199 Jun 25 10:34 /home/jenkins_home/workspace/task3/report/junit.xml
+[Pipeline] sh
++ groovy --version
+Groovy Version: 4.0.21 JVM: 17.0.10 Vendor: Oracle Corporation OS: Linux
+[Pipeline] script
+[Pipeline] &#123;
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] &#123;
+[Pipeline] sh
++ docker inspect -f . groovy:4.0.20-jdk17
+.
+[Pipeline] &#125;
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+c2 does not seem to be running inside a container
+$ docker run -t -d -u 0:0 -v $&#123;WORKSPACE&#125;:/share -w /home/jenkins_home/workspace/task3 -v /home/jenkins_home/workspace/task3:/home/jenkins_home/workspace/task3:rw,z -v /home/jenkins_home/workspace/task3@tmp:/home/jenkins_home/workspace/task3@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** groovy:4.0.20-jdk17 cat
+$ docker top d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79c493e85ca -eo pid,comm
+[Pipeline] &#123;
+[Pipeline] sh
++ groovy --version
+WARNING: Using incubator modules: jdk.incubator.vector, jdk.incubator.foreign
+Groovy Version: 4.0.20 JVM: 17.0.11 Vendor: Eclipse Adoptium OS: Linux
+[Pipeline] readFile
+[Pipeline] echo
+[2024/06/25 11:12:03.212][INFO] Groovy version: 2.4.21
+[Pipeline] &#125;
+$ docker stop --time=1 d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79c493e85ca
+$ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79c493e85ca
+</code></pre>
+<p>最后, 只能使用Groovy 2.x版本的内置xml解析方法, 可以解决, 但因为4.0的版本, 相应的方法重构到groovy.xml包中, 所以在运行4.0的idea环境会标红报错, 不用管它, 直接提交.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Src\class</span><br><span class="line"></span><br><span class="line">class JunitReport &#123;</span><br><span class="line">    String xmlContents</span><br><span class="line"></span><br><span class="line">    def read()&#123;</span><br><span class="line">        new Logger().info(&quot;Groovy version: $&#123;GroovySystem.version&#125;&quot;)</span><br><span class="line">        def xml = new groovy.util.XmlParser().parseText(this.xmlContents)</span><br><span class="line"></span><br><span class="line">        def totalTests = 0</span><br><span class="line">        def totalErrors = 0</span><br><span class="line">        def totalFailures = 0</span><br><span class="line">        def totalSkipped = 0</span><br><span class="line"></span><br><span class="line">        xml.testsuite.each &#123; suite -&gt;</span><br><span class="line">            totalTests =+ suite.@tests.toInteger()</span><br><span class="line">            totalErrors += suite.@errors.toInteger()</span><br><span class="line">            totalFailures += suite.@failures.toInteger()</span><br><span class="line">            totalSkipped += suite.@skipped.toInteger()</span><br><span class="line">        &#125;</span><br><span class="line">        return [</span><br><span class="line">                &#x27;test&#x27;: totalTests,</span><br><span class="line">                &#x27;error&#x27;: totalErrors,</span><br><span class="line">                &#x27;fail&#x27;: totalFailures,</span><br><span class="line">                &#x27;skip&#x27;: totalSkipped</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="Share-library-运行的结点"><a href="#Share-library-运行的结点" class="headerlink" title="Share library 运行的结点"></a>Share library 运行的结点</h3><p>运行在Master node, 如果有什么操作是对Slave上的数据, 尽量用Jenkins                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                内置的步骤</p>
+<h3 id="Share-library-class-loader-目录"><a href="#Share-library-class-loader-目录" class="headerlink" title="Share library class loader 目录"></a>Share library class loader 目录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">master节点的/var/jenkins_home/war/WEB-INF/classes</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Share-library-版本"><a href="#Share-library-版本" class="headerlink" title="Share library 版本"></a>Share library 版本</h3><p>Share library的Groovy版本为2.X, 不受docker和tool 指定版本的影响, 且不能改变, 无法升级.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Groovy version: 2.4.21</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Share-library定义类"><a href="#Share-library定义类" class="headerlink" title="Share library定义类"></a>Share library定义类</h3><p>Share library中如果使用了类, 再使用Jenkins的内置Steps后, 会报错, 这些内置方法会被认为是类的方法, 但是又找不到实现, 解决方法, 是在Jenkins的Pipeline传递一个Steps的引用过来, 然后通过steps调用这些内置方法.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">stage(&quot;do somethings&quot;)</span><br><span class="line"> steps&#123;</span><br><span class="line">  script&#123;</span><br><span class="line">        deploy(this, &#x27;gitlab_testtoken&#x27;)</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vars\deploy.groovy</span><br><span class="line">def call(steps, apiToken)&#123;</span><br><span class="line">        new Gitlab(steps, apiToken).deploy()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">src\Gitlab.groovy</span><br><span class="line">class Gitlab&#123;</span><br><span class="line"></span><br><span class="line">Gitlab(steps, credentialsId)&#123;</span><br><span class="line">        this.steps = steps</span><br><span class="line">        this.credentialsId = credentialsId</span><br><span class="line">&#125;</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line"> def result = steps.readJSON text: &quot;&quot;&quot;$&#123;response.content&#125;&quot;&quot;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Share-library文件中只定义了方法"><a href="#Share-library文件中只定义了方法" class="headerlink" title="Share library文件中只定义了方法"></a>Share library文件中只定义了方法</h3><p>这种文件, 第一次用, 觉得很奇怪, 居然可以使用new 文件名, 实例化出来一个继承于Groovy.lang.script的子类, 可以能过实例直接调用其中的方法</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Jenkins的Share library是个天坑,  一方面提供了Groovy可以将常用的操作, 总结并共享出来, 但另一方面, 它的版本始终是2.x, 和现有的Groovy的开发环境不能保持一致, 所以能用内置Steps操作, 坚决使用内置操作</p>
+<p>对于只使用Jenkins, 想了解的Groovy的人来说, 不必太过于深入, 知道基本的语法操作, 然后了解一下闭包和DSL就可以了.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/16/Jenkins-share-library-%E6%8E%A2%E5%9D%91/" data-id="cm3kcmiaq00003hqg5ijxfu60" data-title="Jenkins share library 探坑" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/03/23/20240323-k8s-notes-md/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">k8s 学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/16/Jenkins-share-library-%E6%8E%A2%E5%9D%91/">Jenkins share library 探坑</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/23/20240323-k8s-notes-md/">k8s 学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/19/20240319-hexo-disply-image-md/">解决Hexo 显示图片的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/19/20240319-pytest-learing-notes-md/">Pytest 学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/14/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
