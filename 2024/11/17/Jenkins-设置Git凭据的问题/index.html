@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Jenkins 设置Git凭据的问题 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="设置步骤进入凭据, 根据需要, 选择全局, 增加凭据 类型 -&gt; SSH Username with private key 范围, 默认是全局 ID, 起个名字, 唯一值,  不设置, 会自动生成一个uuid 描述, 自行填写 Username 这个要写github&#x2F;gitlab repo 上面的登录名 Private Key, 勾选  Linux 1xclip -sel cli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins 设置Git凭据的问题">
+<meta property="og:url" content="http://example.com/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="设置步骤进入凭据, 根据需要, 选择全局, 增加凭据 类型 -&gt; SSH Username with private key 范围, 默认是全局 ID, 起个名字, 唯一值,  不设置, 会自动生成一个uuid 描述, 自行填写 Username 这个要写github&#x2F;gitlab repo 上面的登录名 Private Key, 勾选  Linux 1xclip -sel cli">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-16T16:01:21.000Z">
+<meta property="article:modified_time" content="2024-11-16T16:01:49.533Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Jenkins">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Jenkins-设置Git凭据的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-11-16T16:01:21.000Z" itemprop="datePublished">2024-11-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Jenkins 设置Git凭据的问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="设置步骤"><a href="#设置步骤" class="headerlink" title="设置步骤"></a>设置步骤</h2><p>进入凭据, 根据需要, 选择全局, 增加凭据</p>
+<p><strong>类型</strong> -&gt; SSH Username with private key</p>
+<p><strong>范围</strong>, 默认是全局</p>
+<p><strong>ID</strong>, 起个名字, 唯一值,  不设置, 会自动生成一个uuid</p>
+<p><strong>描述</strong>, 自行填写</p>
+<p><em><strong><u>Username</u></strong></em> 这个要写github&#x2F;gitlab repo 上面的登录名</p>
+<p>Private Key, 勾选</p>
+<ul>
+<li><p>Linux</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xclip -sel clip &lt; ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Windows </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_ed25519.pub | clip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Mac</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方法1: tr -d &#x27;\n&#x27; &lt; ~/.ssh/id_ed25519.pub | pbcopy</span><br><span class="line"></span><br><span class="line">方法2: pbcopy &lt; id_ed25519</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><em><strong><u>Passphrase</u></strong></em></p>
+<ul>
+<li>输入Private key的密码</li>
+</ul>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li><p>stdout:  stderr: No ECDSA host key is known for gitlab.amcax.net and you have requested strict checking. Host key verification failed.</p>
+</li>
+<li><p>stderr: Permission denied, please try again.</p>
+</li>
+</ol>
+<p>系统管理 -&gt; 全局安全设置 -&gt; Git Host Key Verification Configuration</p>
+<p><strong>选择No verificatoin</strong>, 但这样安全性就很低</p>
+<p><strong>如果选择Known host file</strong>, 需要用jenkins用户进拉docker 将远程repo的ssh信息手动加到known_host文件.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker <span class="built_in">exec</span> -it -u jenkins myjenkins bash</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> /var/jenkins_home/</span><br><span class="line">$ <span class="built_in">mkdir</span> .ssh</span><br><span class="line">$ <span class="built_in">chmod</span> 700 .ssh</span><br><span class="line"> </span><br><span class="line">$ ssh-keyscan gitlab.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts</span><br><span class="line">$ ssh-keyscan -t ed25519 github.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"></span><br><span class="line">&gt; docker <span class="built_in">exec</span> -it -u root myjenkins bash</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">mkdir</span> /root/.ssh &amp;&amp; <span class="built_in">chmod</span> 700 /root/.ssh</span><br><span class="line">$ ssh-keyscan gitlab.com &gt;&gt; /root/.ssh/known_hosts</span><br><span class="line">$ ssh-keyscan -t ed25519 github.com &gt;&gt; /root/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>选择Accept first connnection</strong>, 可以不用手动添加known_hosts, 但还是要手动创建.ssh目录和known_hosts文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /var/jenkins_home/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 700 /var/jenkins_home/.ssh</span><br><span class="line"><span class="built_in">touch</span> /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"><span class="built_in">chmod</span> 600 /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /root/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 700 /root/.ssh</span><br><span class="line"><span class="built_in">touch</span> /root/.ssh/known_hosts</span><br><span class="line"><span class="built_in">chmod</span> 600 /root/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+<h1 id="Jenkins-设置Git凭据的问题"><a href="#Jenkins-设置Git凭据的问题" class="headerlink" title="Jenkins 设置Git凭据的问题"></a>Jenkins 设置Git凭据的问题</h1><h2 id="设置步骤-1"><a href="#设置步骤-1" class="headerlink" title="设置步骤"></a>设置步骤</h2><p>进入凭据, 根据需要, 选择全局, 增加凭据</p>
+<p><strong>类型</strong> -&gt; SSH Username with private key</p>
+<p><strong>范围</strong>, 默认是全局</p>
+<p><strong>ID</strong>, 起个名字, 唯一值,  不设置, 会自动生成一个uuid</p>
+<p><strong>描述</strong>, 自行填写</p>
+<p><em><strong><u>Username</u></strong></em> 这个要写github&#x2F;gitlab repo 上面的登录名</p>
+<p>Private Key, 勾选</p>
+<ul>
+<li><p>Linux</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xclip -sel clip &lt; ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Windows </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_ed25519.pub | clip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Mac</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方法1: tr -d &#x27;\n&#x27; &lt; ~/.ssh/id_ed25519.pub | pbcopy</span><br><span class="line"></span><br><span class="line">方法2: pbcopy &lt; id_ed25519</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><em><strong><u>Passphrase</u></strong></em></p>
+<ul>
+<li>输入Private key的密码</li>
+</ul>
+<h2 id="问题解决-1"><a href="#问题解决-1" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li><p>stdout:  stderr: No ECDSA host key is known for gitlab.amcax.net and you have requested strict checking. Host key verification failed.</p>
+</li>
+<li><p>stderr: Permission denied, please try again.</p>
+</li>
+</ol>
+<p>系统管理 -&gt; 全局安全设置 -&gt; Git Host Key Verification Configuration</p>
+<p><strong>选择No verificatoin</strong>, 但这样安全性就很低</p>
+<p><strong>如果选择Known host file</strong>, 需要用jenkins用户进拉docker 将远程repo的ssh信息手动加到known_host文件.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker <span class="built_in">exec</span> -it -u jenkins myjenkins bash</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> /var/jenkins_home/</span><br><span class="line">$ <span class="built_in">mkdir</span> .ssh</span><br><span class="line">$ <span class="built_in">chmod</span> 700 .ssh</span><br><span class="line"> </span><br><span class="line">$ ssh-keyscan gitlab.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts</span><br><span class="line">$ ssh-keyscan -t ed25519 github.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"></span><br><span class="line">&gt; docker <span class="built_in">exec</span> -it -u root myjenkins bash</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">mkdir</span> /root/.ssh &amp;&amp; <span class="built_in">chmod</span> 700 /root/.ssh</span><br><span class="line">$ ssh-keyscan gitlab.com &gt;&gt; /root/.ssh/known_hosts</span><br><span class="line">$ ssh-keyscan -t ed25519 github.com &gt;&gt; /root/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>选择Accept first connnection</strong>, 可以不用手动添加known_hosts, 但还是要手动创建.ssh目录和known_hosts文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /var/jenkins_home/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 700 /var/jenkins_home/.ssh</span><br><span class="line"><span class="built_in">touch</span> /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"><span class="built_in">chmod</span> 600 /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /root/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 700 /root/.ssh</span><br><span class="line"><span class="built_in">touch</span> /root/.ssh/known_hosts</span><br><span class="line"><span class="built_in">chmod</span> 600 /root/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cm3kcw0a80001ayqg1eac6leh" data-title="Jenkins 设置Git凭据的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/11/16/%E8%BF%81%E7%A7%BBDocker-image-%E5%AD%98%E5%82%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">迁移Docker image 存储</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91-Jenkins/" rel="tag">坑 Jenkins</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a> <a href="/tags/%E5%9D%91-Jenkins/" style="font-size: 10px;">坑 Jenkins</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/">Jenkins 设置Git凭据的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/16/%E8%BF%81%E7%A7%BBDocker-image-%E5%AD%98%E5%82%A8/">迁移Docker image 存储</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/16/Jenkins-share-library-%E6%8E%A2%E5%9D%91/">Jenkins share library 探坑</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/23/20240323-k8s-notes-md/">k8s 学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2024/03/19/20240319-hexo-disply-image-md/">解决Hexo 显示图片的问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

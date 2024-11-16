@@ -69,6 +69,170 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Jenkins-设置Git凭据的问题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/" class="article-date">
+  <time class="dt-published" datetime="2024-11-16T16:01:21.000Z" itemprop="datePublished">2024-11-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/">Jenkins 设置Git凭据的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="设置步骤"><a href="#设置步骤" class="headerlink" title="设置步骤"></a>设置步骤</h2><p>进入凭据, 根据需要, 选择全局, 增加凭据</p>
+<p><strong>类型</strong> -&gt; SSH Username with private key</p>
+<p><strong>范围</strong>, 默认是全局</p>
+<p><strong>ID</strong>, 起个名字, 唯一值,  不设置, 会自动生成一个uuid</p>
+<p><strong>描述</strong>, 自行填写</p>
+<p><em><strong><u>Username</u></strong></em> 这个要写github&#x2F;gitlab repo 上面的登录名</p>
+<p>Private Key, 勾选</p>
+<ul>
+<li><p>Linux</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xclip -sel clip &lt; ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Windows </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_ed25519.pub | clip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Mac</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方法1: tr -d &#x27;\n&#x27; &lt; ~/.ssh/id_ed25519.pub | pbcopy</span><br><span class="line"></span><br><span class="line">方法2: pbcopy &lt; id_ed25519</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><em><strong><u>Passphrase</u></strong></em></p>
+<ul>
+<li>输入Private key的密码</li>
+</ul>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li><p>stdout:  stderr: No ECDSA host key is known for gitlab.amcax.net and you have requested strict checking. Host key verification failed.</p>
+</li>
+<li><p>stderr: Permission denied, please try again.</p>
+</li>
+</ol>
+<p>系统管理 -&gt; 全局安全设置 -&gt; Git Host Key Verification Configuration</p>
+<p><strong>选择No verificatoin</strong>, 但这样安全性就很低</p>
+<p><strong>如果选择Known host file</strong>, 需要用jenkins用户进拉docker 将远程repo的ssh信息手动加到known_host文件.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker <span class="built_in">exec</span> -it -u jenkins myjenkins bash</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> /var/jenkins_home/</span><br><span class="line">$ <span class="built_in">mkdir</span> .ssh</span><br><span class="line">$ <span class="built_in">chmod</span> 700 .ssh</span><br><span class="line"> </span><br><span class="line">$ ssh-keyscan gitlab.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts</span><br><span class="line">$ ssh-keyscan -t ed25519 github.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"></span><br><span class="line">&gt; docker <span class="built_in">exec</span> -it -u root myjenkins bash</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">mkdir</span> /root/.ssh &amp;&amp; <span class="built_in">chmod</span> 700 /root/.ssh</span><br><span class="line">$ ssh-keyscan gitlab.com &gt;&gt; /root/.ssh/known_hosts</span><br><span class="line">$ ssh-keyscan -t ed25519 github.com &gt;&gt; /root/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>选择Accept first connnection</strong>, 可以不用手动添加known_hosts, 但还是要手动创建.ssh目录和known_hosts文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /var/jenkins_home/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 700 /var/jenkins_home/.ssh</span><br><span class="line"><span class="built_in">touch</span> /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"><span class="built_in">chmod</span> 600 /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /root/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 700 /root/.ssh</span><br><span class="line"><span class="built_in">touch</span> /root/.ssh/known_hosts</span><br><span class="line"><span class="built_in">chmod</span> 600 /root/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+<h1 id="Jenkins-设置Git凭据的问题"><a href="#Jenkins-设置Git凭据的问题" class="headerlink" title="Jenkins 设置Git凭据的问题"></a>Jenkins 设置Git凭据的问题</h1><h2 id="设置步骤-1"><a href="#设置步骤-1" class="headerlink" title="设置步骤"></a>设置步骤</h2><p>进入凭据, 根据需要, 选择全局, 增加凭据</p>
+<p><strong>类型</strong> -&gt; SSH Username with private key</p>
+<p><strong>范围</strong>, 默认是全局</p>
+<p><strong>ID</strong>, 起个名字, 唯一值,  不设置, 会自动生成一个uuid</p>
+<p><strong>描述</strong>, 自行填写</p>
+<p><em><strong><u>Username</u></strong></em> 这个要写github&#x2F;gitlab repo 上面的登录名</p>
+<p>Private Key, 勾选</p>
+<ul>
+<li><p>Linux</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xclip -sel clip &lt; ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Windows </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_ed25519.pub | clip</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Mac</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方法1: tr -d &#x27;\n&#x27; &lt; ~/.ssh/id_ed25519.pub | pbcopy</span><br><span class="line"></span><br><span class="line">方法2: pbcopy &lt; id_ed25519</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><em><strong><u>Passphrase</u></strong></em></p>
+<ul>
+<li>输入Private key的密码</li>
+</ul>
+<h2 id="问题解决-1"><a href="#问题解决-1" class="headerlink" title="问题解决"></a>问题解决</h2><ol>
+<li><p>stdout:  stderr: No ECDSA host key is known for gitlab.amcax.net and you have requested strict checking. Host key verification failed.</p>
+</li>
+<li><p>stderr: Permission denied, please try again.</p>
+</li>
+</ol>
+<p>系统管理 -&gt; 全局安全设置 -&gt; Git Host Key Verification Configuration</p>
+<p><strong>选择No verificatoin</strong>, 但这样安全性就很低</p>
+<p><strong>如果选择Known host file</strong>, 需要用jenkins用户进拉docker 将远程repo的ssh信息手动加到known_host文件.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker <span class="built_in">exec</span> -it -u jenkins myjenkins bash</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> /var/jenkins_home/</span><br><span class="line">$ <span class="built_in">mkdir</span> .ssh</span><br><span class="line">$ <span class="built_in">chmod</span> 700 .ssh</span><br><span class="line"> </span><br><span class="line">$ ssh-keyscan gitlab.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts</span><br><span class="line">$ ssh-keyscan -t ed25519 github.com &gt;&gt; /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"></span><br><span class="line">&gt; docker <span class="built_in">exec</span> -it -u root myjenkins bash</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">mkdir</span> /root/.ssh &amp;&amp; <span class="built_in">chmod</span> 700 /root/.ssh</span><br><span class="line">$ ssh-keyscan gitlab.com &gt;&gt; /root/.ssh/known_hosts</span><br><span class="line">$ ssh-keyscan -t ed25519 github.com &gt;&gt; /root/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>选择Accept first connnection</strong>, 可以不用手动添加known_hosts, 但还是要手动创建.ssh目录和known_hosts文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /var/jenkins_home/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 700 /var/jenkins_home/.ssh</span><br><span class="line"><span class="built_in">touch</span> /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"><span class="built_in">chmod</span> 600 /var/jenkins_home/.ssh/known_hosts</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /root/.ssh</span><br><span class="line"><span class="built_in">chmod</span> 700 /root/.ssh</span><br><span class="line"><span class="built_in">touch</span> /root/.ssh/known_hosts</span><br><span class="line"><span class="built_in">chmod</span> 600 /root/.ssh/known_hosts</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/" data-id="cm3kcw0a80001ayqg1eac6leh" data-title="Jenkins 设置Git凭据的问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-迁移Docker-image-存储" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/11/16/%E8%BF%81%E7%A7%BBDocker-image-%E5%AD%98%E5%82%A8/" class="article-date">
+  <time class="dt-published" datetime="2024-11-16T15:59:49.000Z" itemprop="datePublished">2024-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/11/16/%E8%BF%81%E7%A7%BBDocker-image-%E5%AD%98%E5%82%A8/">迁移Docker image 存储</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Docker-image-存储位置"><a href="#Docker-image-存储位置" class="headerlink" title="Docker image 存储位置:"></a>Docker image 存储位置:</h3><p>%LOCALAPPDATA%\Docker\wsl</p>
+<p>查看当前信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;wsl -l -v</span><br><span class="line">  NAME                   STATE           VERSION</span><br><span class="line">* docker-desktop-data    Stopped         2</span><br><span class="line">  docker-desktop         Stopped         2</span><br></pre></td></tr></table></figure>
+
+
+
+<p>迁移</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\youka&gt;wsl --shutdown</span><br><span class="line"></span><br><span class="line">C:\Users\youka&gt;wsl --export docker-desktop-data h:\docker\docker-data.tar</span><br><span class="line">正在导出，这可能需要几分钟时间。</span><br><span class="line">操作成功完成。</span><br><span class="line"></span><br><span class="line">C:\Users\youka&gt;wsl --export docker-desktop-data h:\docker\docker-data.tar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:\Users\youka&gt;wsl --unregister docker-desktop-data</span><br><span class="line">正在注销。</span><br><span class="line">操作成功完成。</span><br><span class="line"></span><br><span class="line">C:\Users\youka&gt;wsl --import docker-desktop-data h:\docker\data h:\docker\docker-data.tar --version 2</span><br><span class="line">正在导入，这可能需要几分钟时间。</span><br><span class="line">操作成功完成。</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/11/16/%E8%BF%81%E7%A7%BBDocker-image-%E5%AD%98%E5%82%A8/" data-id="cm3kcw0a60000ayqg98gy2ekt" data-title="迁移Docker image 存储" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Jenkins-share-library-探坑" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/11/16/Jenkins-share-library-%E6%8E%A2%E5%9D%91/" class="article-date">
@@ -201,7 +365,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9D%91-Jenkins/" rel="tag">坑 Jenkins</a></li></ul>
 
     </footer>
   </div>
@@ -1640,7 +1804,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91-Jenkins/" rel="tag">坑 Jenkins</a></li></ul>
     </div>
   </div>
 
@@ -1650,7 +1814,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/k8s/" style="font-size: 15px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a>
+      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a> <a href="/tags/%E5%9D%91-Jenkins/" style="font-size: 10px;">坑 Jenkins</a>
     </div>
   </div>
 
@@ -1672,6 +1836,14 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
       <ul>
         
           <li>
+            <a href="/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/">Jenkins 设置Git凭据的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/16/%E8%BF%81%E7%A7%BBDocker-image-%E5%AD%98%E5%82%A8/">迁移Docker image 存储</a>
+          </li>
+        
+          <li>
             <a href="/2024/11/16/Jenkins-share-library-%E6%8E%A2%E5%9D%91/">Jenkins share library 探坑</a>
           </li>
         
@@ -1681,14 +1853,6 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
         
           <li>
             <a href="/2024/03/19/20240319-hexo-disply-image-md/">解决Hexo 显示图片的问题</a>
-          </li>
-        
-          <li>
-            <a href="/2024/03/19/20240319-pytest-learing-notes-md/">Pytest 学习笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2024/03/14/hello-world/">Hello World</a>
           </li>
         
       </ul>

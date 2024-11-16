@@ -14,9 +14,9 @@
 <meta property="og:description" content="因一个自动化测试项目, 运行在docker container中, Jenkins pipeline需要获取测试用例的运行结果, 来决定本次运行的最终结果. 一开始比较想当然的使用share library, 读取自动生成的Junit格式的xml, 然后使用Groovy内置的XmlParser来解析, 并分析得到是否有失败, 跳过的测试用例, 确认本次的运行结果 代码如下 123456789101">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-11-16T15:52:52.000Z">
-<meta property="article:modified_time" content="2024-11-16T15:56:28.282Z">
+<meta property="article:modified_time" content="2024-11-16T16:02:02.138Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="坑">
+<meta property="article:tag" content="坑 Jenkins">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -204,13 +204,22 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9D%91-Jenkins/" rel="tag">坑 Jenkins</a></li></ul>
 
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/2024/11/16/%E8%BF%81%E7%A7%BBDocker-image-%E5%AD%98%E5%82%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          迁移Docker image 存储
+        
+      </div>
+    </a>
   
   
     <a href="/2024/03/23/20240323-k8s-notes-md/" id="article-nav-older" class="article-nav-link-wrap">
@@ -235,7 +244,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/" rel="tag">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91/" rel="tag">坑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9D%91-Jenkins/" rel="tag">坑 Jenkins</a></li></ul>
     </div>
   </div>
 
@@ -245,7 +254,7 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Java/" style="font-size: 15px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/k8s/" style="font-size: 15px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a>
+      <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 10px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/%E5%9D%91/" style="font-size: 20px;">坑</a> <a href="/tags/%E5%9D%91-Jenkins/" style="font-size: 10px;">坑 Jenkins</a>
     </div>
   </div>
 
@@ -267,6 +276,14 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
       <ul>
         
           <li>
+            <a href="/2024/11/17/Jenkins-%E8%AE%BE%E7%BD%AEGit%E5%87%AD%E6%8D%AE%E7%9A%84%E9%97%AE%E9%A2%98/">Jenkins 设置Git凭据的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2024/11/16/%E8%BF%81%E7%A7%BBDocker-image-%E5%AD%98%E5%82%A8/">迁移Docker image 存储</a>
+          </li>
+        
+          <li>
             <a href="/2024/11/16/Jenkins-share-library-%E6%8E%A2%E5%9D%91/">Jenkins share library 探坑</a>
           </li>
         
@@ -276,14 +293,6 @@ $ docker rm -f --volumes d3acf25e36c816c6f8ef383abb30ee09c7835fc162ba36c031c8f79
         
           <li>
             <a href="/2024/03/19/20240319-hexo-disply-image-md/">解决Hexo 显示图片的问题</a>
-          </li>
-        
-          <li>
-            <a href="/2024/03/19/20240319-pytest-learing-notes-md/">Pytest 学习笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2024/03/14/hello-world/">Hello World</a>
           </li>
         
       </ul>
